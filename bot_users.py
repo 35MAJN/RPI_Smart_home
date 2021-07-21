@@ -1,0 +1,1 @@
+class new_user():
