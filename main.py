@@ -1,1 +1,1 @@
-print(35)
+from PyQt4.QtGui import
