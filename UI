@@ -7,7 +7,7 @@ from PyQt4.QtCore import QPoint
 from os import path, walk
 import shutil
 from array import array
-from Tools import Opacity, Shadow
+from Tools import Opacity, Shadow, newOrder
 import requests
 from datetime import datetime
 from math import sin
@@ -22,33 +22,34 @@ Mother_ID = 518708663
 Alirezaishisname = 714142326
 
 class SyntaxUI(QMainWindow):
-    def setupUi(self, Syntax, bot):
-        if ("Ui Setup"   is not None):
+    def __init__(self, Syntax, bot):
+        super(self.__class__, self).__init__()
+        if ("Ui Setup" is not None):
             Syntax.setObjectName("Syntax")
             Syntax.resize(1024, 600)
             Syntax.setMinimumSize(1024, 600)
             Syntax.setMaximumSize(1024, 600)
             Syntax.setWindowTitle("3MAJN5")
             Syntax.setWindowFlags(Qt.FramelessWindowHint)
-            if(path.exists('Label')):
+            if (path.exists('Label')):
                 print("We have Label")
             else:
                 src = str(
                     QFileDialog.getExistingDirectory(self, "Select a folder for Labels", "Label Folder"))
                 dest = "Label"
                 destination = shutil.copytree(src, dest)
-        if ("AI"         is not None):
+        if ("AI" is not None):
             self.ANNLamp = 0
             self.AlarmPlaying = False
             self.ANNHT = 0
             self.Volume = 1
             self.randh = 0
             self.ANNZ = 50
-            self.ANNH= array('f', (0 for i in range(0, 24)))
+            self.ANNH = array('f', (0 for i in range(0, 24)))
             for i in range(24):
-                if(i<6):
+                if (i < 6):
                     self.ANNH[i] = 20
-                elif(i<18):
+                elif (i < 18):
                     self.ANNH[i] = 40
                 else:
                     self.ANNH[i] = 50
@@ -73,7 +74,8 @@ class SyntaxUI(QMainWindow):
                 print(self.BGPath + self.BGPathL[self.BGImagesNUM])
                 self.BGLabel2.setStyleSheet("background:black")
             except:
-                self.BGPath = str(QFileDialog.getExistingDirectory(self, "Select a folder for BackGround Images:","Background Folder"))
+                self.BGPath = str(QFileDialog.getExistingDirectory(self, "Select a folder for BackGround Images:",
+                                                                   "Background Folder"))
                 self.BGPath = self.BGPath.replace('\\', '/')
                 self.BGPath += '/'
                 print(self.BGPath)
@@ -90,7 +92,7 @@ class SyntaxUI(QMainWindow):
                 self.BGLabel2.setPixmap(QPixmap(self.BGPath + self.BGPathL[self.BGImagesNUM]))
                 print(self.BGPath + self.BGPathL[self.BGImagesNUM])
                 self.BGLabel2.setStyleSheet("background:black")
-        if ("Music"      is not None):
+        if ("Music" is not None):
             try:
                 fileCheck1 = open("MusicPath.txt", 'r')
                 self.MusicPath = fileCheck1.read()
@@ -130,7 +132,7 @@ class SyntaxUI(QMainWindow):
             self.MusicNumPlaying = 0
             self.MusicNormalMode = True
             self.MusicVolume = 0.1
-            #self.SetVolume(0.1)
+            # self.SetVolume(0.1)
             self.MusicPlaying = False
             self.Musicdirpath = ""
             self.Musicdirnames = ""
@@ -142,7 +144,6 @@ class SyntaxUI(QMainWindow):
         if ("MenuButton" is not None):
             self.MenuWidget = QWidget(self)
             self.MenuWidget.setGeometry(0, 50, 80, 500)
-
 
             self.MenuLabel1 = QLabel(self.MenuWidget)
             self.MenuLabel1.setPixmap(QPixmap("Label/Menu/Menu.png"))
@@ -196,7 +197,7 @@ class SyntaxUI(QMainWindow):
             self.MenuSetBTN.setStyleSheet("border-radius: 5%;outline-style: initial;")
             self.MenuSetBTN.setGraphicsEffect(Opacity(0.7))
             self.MenuSetBTN.clicked.connect(self.MenuSetBTNDef)
-        if ("HomeTab"    is not None):
+        if ("HomeTab" is not None):
             self.HomeTabWidget = QWidget(self)
             self.HomeTabWidget.setGeometry(774, 50, 250, 500)
             self.HomeTabLabel = QLabel(self.HomeTabWidget)
@@ -386,7 +387,7 @@ class SyntaxUI(QMainWindow):
             self.HomeTabMusicNext.setStyleSheet("border-radius: 5%;outline-style: initial;")
             self.HomeTabMusicNext.setGraphicsEffect(Opacity(0.4))
             self.HomeTabMusicNext.clicked.connect(self.NextMusicDef)
-        if ("RoomTab"    is not None):
+        if ("RoomTab" is not None):
             self.RoomTabWidget = QWidget(self)
             self.RoomTabWidget.setGeometry(274, 50, 750, 500)
             self.RoomTabLabel = QLabel(self.RoomTabWidget)
@@ -544,7 +545,7 @@ class SyntaxUI(QMainWindow):
             self.RoomTabClockS.setAlignment(Qt.AlignCenter)
             self.RoomTabClockS.setStyleSheet('color:white;')
             self.RoomTabClockS.setGraphicsEffect(Opacity(0.4))
-        if ("TempCoTab"  is not None):
+        if ("TempCoTab" is not None):
             self.TempCoWidget = QWidget(self)
             self.TempCoWidget.setGeometry(474, 50, 550, 550)
             self.TempCoTabGraphWidget = QWidget(self.TempCoWidget)
@@ -569,11 +570,11 @@ class SyntaxUI(QMainWindow):
             now = datetime.now()
 
             for n in range(24):
-                self.TempClockInHour[n] = 0.2*(sin(n))*n+ 25
+                self.TempClockInHour[n] = 0.2 * (sin(n)) * n + 25
                 self.TempCoTabGraphH[n] = QLabel(self.TempCoTabGraphWidget)
                 self.TempCoTabGraphH[n].setGeometry(
                     53 + n * (454 / 23), 215 - ((self.TempClockInHour[n] - 19) * (185 / 12)), 10,
-                                 ((self.TempClockInHour[n] - 19) * (185 / 12)))
+                    ((self.TempClockInHour[n] - 19) * (185 / 12)))
                 if (self.TempClockInHour[n] <= 22.5):
                     self.TempCoTabGraphH[n].setStyleSheet(self.TempCoSetStyleSheetL)
                 elif (self.TempClockInHour[n] < 27.5):
@@ -583,13 +584,13 @@ class SyntaxUI(QMainWindow):
                 self.TempCoTabGraphH[n].setGraphicsEffect(Opacity(0.4))
 
             # ! hm, tm = Adafruit_DHT.read_retry(22, 4)
-            self.TempCheckAve = [22,23]#tm
+            self.TempCheckAve = [22, 23]  # tm
             for n in range(24):
                 if (n == int(now.hour) - 1):
-                    self.TempClockInHour[n] = 0 # ! float(tm)
+                    self.TempClockInHour[n] = 0  # ! float(tm)
                     self.TempCoTabGraphH[n].setGeometry(
                         53 + n * (454 / 23), 215 - ((self.TempClockInHour[n] - 19) * (185 / 12)), 10,
-                                     ((self.TempClockInHour[n] - 19) * (185 / 12)))
+                        ((self.TempClockInHour[n] - 19) * (185 / 12)))
                     if (self.TempClockInHour[n] <= 21):
                         self.TempCoTabGraphH[n].setStyleSheet(self.TempCoSetStyleSheetL)
                     elif (self.TempClockInHour[n] <= 27):
@@ -695,7 +696,7 @@ class SyntaxUI(QMainWindow):
             self.TempCoTabModeBTN.setStyleSheet("border-radius: 5%;outline-style: initial;")
             self.TempCoTabModeBTN.clicked.connect(self.TempCoModeDef)
             self.TempCoTabModeBool = False
-        if ("MusicTab"   is not None):
+        if ("MusicTab" is not None):
             self.MusicTabWidget = QWidget(self)
             self.MusicTabWidget.setGeometry(674, 125, 350, 350)
             self.MusicTabWidgetLabel = QLabel(self.MusicTabWidget)
@@ -780,7 +781,7 @@ class SyntaxUI(QMainWindow):
             self.MusicTabNameArtist.setAlignment(Qt.AlignCenter)
             self.MusicTabNameArtist.setStyleSheet('color:white;')
             self.MusicTabNameArtist.setGraphicsEffect(Opacity(0.6))
-        if ("SocialTab"  is not None):
+        if ("SocialTab" is not None):
             self.SocialTabWidget = QWidget(self)
             self.SocialTabWidget.setGeometry(274, 50, 750, 300)
             self.SocialTabLabel = QLabel(self.SocialTabWidget)
@@ -797,8 +798,8 @@ class SyntaxUI(QMainWindow):
             self.BaleBot4 = "Father : Turn off"
             self.BaleBot5 = "MAJN : All on"
             self.SocialTabTXT.setText("<h3>The last five orders:</h3>" + self.BaleBot1
-                                      +"<br/>" + self.BaleBot2 +"<br/>"+ self.BaleBot3
-                                      +"<br/>"+ self.BaleBot4 +"<br/>"+ self.BaleBot5 )
+                                      + "<br/>" + self.BaleBot2 + "<br/>" + self.BaleBot3
+                                      + "<br/>" + self.BaleBot4 + "<br/>" + self.BaleBot5)
             self.EbrimaFont = QFont()
             self.EbrimaFont.setFamily('Ebrima')
             self.EbrimaFont.setPixelSize(20)
@@ -1013,7 +1014,7 @@ class SyntaxUI(QMainWindow):
             self.SettingTabAlarm.clicked.connect(self.SettingTabAlarmDef)
             self.SettingTabAlarmB = True
             self.SettingTabAlarmAnim = QPropertyAnimation(self.SettingTabWidget2, 'geometry')
-        if ("UI Anim"    is not None):
+        if ("UI Anim" is not None):
             self.HomeBTN = QPushButton(self)
             self.HomeBTN.setGeometry(0, 0, 0, 0)
             self.RoomBTN = QPushButton(self)
@@ -1117,7 +1118,7 @@ class SyntaxUI(QMainWindow):
             self.AnimG3 = QParallelAnimationGroup()
 
             self.AnimG4 = QParallelAnimationGroup()
-        if ("Clocks"     is not None):
+        if ("Clocks" is not None):
             self.ClockHome = QTimer(self)
             self.ClockHome.setInterval(1000)
             self.ClockHome.timeout.connect(self.ClockHomeDef)
@@ -1154,7 +1155,7 @@ class SyntaxUI(QMainWindow):
             self.AITimer.setInterval(1000)
             self.AITimer.timeout.connect(self.AIDef)
             self.AITimer.start()
-        if ("Azan"       is not None):
+        if ("Azan" is not None):
             self.timeir = str(urllib3.PoolManager().request('GET', 'http://www.time.ir/').data)
             self.AzanMorningInt = self.timeir.find("lblAzanMorning\" class=\"inlineBlock ltr text-nowrap\">") + len(
                 "lblAzanMorning\" class=\"inlineBlock ltr text-nowrap\">")
@@ -1201,22 +1202,22 @@ class SyntaxUI(QMainWindow):
             print(self.AzanMorning)
             print(self.AzanNoon)
             print(self.AzanNight)
-        if ("Temp"       is not None):
-            hm, tm = 35,35 # ! Adafruit_DHT.read_retry(22, 4)
+        if ("Temp" is not None):
+            hm, tm = 35, 35  # ! Adafruit_DHT.read_retry(22, 4)
             self.TempCheckAve = tm
             self.HumiCheckAve = hm
             self.HomeTabTempText.setText(str(int(self.TempCheckAve)))
             self.HomeTabHumidityText.setText(str(int(hm)))
             self.TempCoTabAutoOutsideTempTXT.setText(str(int(self.TempCheckAve)))
-        if ("BaleBot"    is not None):
+        if ("BaleBot" is not None):
             markup = ReplyKeyboardMarkup(keyboard=[
                 ['🎛️ Room 🎛️', '📊 Info 📊'],
-                ['⏭', '⏯','⏮'],
+                ['⏭', '⏯', '⏮'],
                 ['🔇', '🔊'],
                 ['⚙ Setting ⚙']])
-            bot.sendMessage(chat_id = MAJN_ID, text='I\'ve restarted \nHome:', reply_markup=markup)
-            bot.sendMessage(chat_id = Father_ID, text='I\'ve restarted \nHome:', reply_markup=markup)
-            bot.sendMessage(chat_id = Mother_ID, text='I\'ve restarted \nHome:', reply_markup=markup)
+            bot.sendMessage(chat_id=MAJN_ID, text='I\'ve restarted \nHome:', reply_markup=markup)
+            bot.sendMessage(chat_id=Father_ID, text='I\'ve restarted \nHome:', reply_markup=markup)
+            bot.sendMessage(chat_id=Mother_ID, text='I\'ve restarted \nHome:', reply_markup=markup)
             try:
                 update_id = bot.get_updates()[0].update_id
             except IndexError:
@@ -1320,7 +1321,7 @@ class SyntaxUI(QMainWindow):
                         info += "\n🎵 : " + self.MusicTabNameMusic.text() + "\n"
                         info += "🎤 : " + self.MusicTabNameArtist.text() + "\n\n"
                         info += "🔒 Security : " + str(self.securityBool) + "\n"
-                        info += "👀Is anyone in room : " + str(bool(GPIO.input(16))) + "\n"
+                        # ! info += "👀Is anyone in room : " + str(bool(GPIO.input(16))) + "\n"
                         info += "🤖AI : " + str(self.SettingTabAIB) + "\n"
                         info += "\n🕋Sobh :       " + self.AzanMorning + " " + str(self.AzanSobh) + "\n"
                         info += "🕋Zohr :        " + self.AzanNoon + " " + str(self.AzanZohr) + "\n"
@@ -2713,7 +2714,7 @@ class SyntaxUI(QMainWindow):
         return pygame.mixer.music.unpause()
 
     def SecurityDef(self, bot):
-        if (self.securityBool == True and  int(GPIO.input(16)) == 1):
+        if (self.securityBool == True): # ! and  int(GPIO.input(16)) == 1):
             if (self.securityCount == 0):
                 bot.sendMessage(MAJN_ID, "Someone in your room...")
             self.securityCount = self.securityCount + 1
@@ -2727,6 +2728,3 @@ class SyntaxUI(QMainWindow):
         pygame.mixer.music.load("audio.mp3")
         pygame.mixer.music.play()
 
-    def __init__(self):
-        super(self.__class__, self).__init__()
-        self.setupUi(self)
