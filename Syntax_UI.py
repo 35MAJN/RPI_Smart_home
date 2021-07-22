@@ -23,7 +23,23 @@ MAJN_ID = 577321253
 Father_ID = 1288912519
 Mother_ID = 518708663
 Alirezaishisname = 7141423261
-bot = Bot(token='783741740:c34f5dad998ac3dc63010957cb5f929e7d0d6d3e', base_url="https://tapi.bale.ai/")
+bot = Bot(token='Your Token', base_url="https://tapi.bale.ai/")
+home_markup = ReplyKeyboardMarkup(keyboard=[
+    ['🎛️ Room 🎛️', '📊 Info 📊'],
+    ['⏭', '⏯','⏮'],
+    ['📸','🔇', '🔊'],
+    ['⚙ Setting ⚙']])
+room_markup = ReplyKeyboardMarkup(keyboard=[
+    ['💡', '🎧'],
+    ['🔌', '🕯️'],
+    ['🔒️', '🤖'],
+    ['🏠 Home 🏠']])
+setting_markup = ReplyKeyboardMarkup(keyboard=[
+    ['⏰ Alarm ⏰'],
+    ['🕋 Sobh 🕋️'],
+    ['🕋 Zohr 🕋️'],
+    ['🕋 Maghreb 🕋'],
+    ['🏠 Home 🏠']])
 
 class SyntaxUI(QMainWindow):
     def __init__(self):
@@ -236,7 +252,7 @@ class SyntaxUI(QMainWindow):
             self.HomeTabWeatherWidget.setStyleSheet("background:url(\"Label/HomeTabLabel2.png\");")
             self.HomeTabWeatherWidget.setGraphicsEffect(Opacity(0.5))
             r = requests.get(
-                'http://api.openweathermap.org/data/2.5/weather?q=Tehran&APPID=b3a9cd6b01d2ab3fe9f0187351659781')
+                'http://api.openweathermap.org/data/2.5/weather?q=Tehran&APPID=Your Token')
             self.OutsideTempW = str(int(r.json()['main']['temp']) - 273.15)
             self.OutSideHumidityW = str(r.json()['main']['humidity'])
             self.HomeTabWeatherLabel = QLabel(self.HomeTabWeatherWidget)
@@ -1215,12 +1231,8 @@ class SyntaxUI(QMainWindow):
             self.HomeTabHumidityText.setText(str(int(hm)))
             self.TempCoTabAutoOutsideTempTXT.setText(str(int(self.TempCheckAve)))
         if ("BaleBot" is not None):
-            markup = ReplyKeyboardMarkup(keyboard=[
-                ['🎛️ Room 🎛️', '📊 Info 📊'],
-                ['⏭', '⏯', '⏮'],
-                ['🔇', '🔊'],
-                ['⚙ Setting ⚙']])
-            bot.sendMessage(chat_id=MAJN_ID, text='I\'ve restarted \nHome:', reply_markup=markup)
+            global home_markup
+            bot.sendMessage(chat_id=MAJN_ID, text='I\'ve restarted \nHome:', reply_markup=home_markup)
             #bot.sendMessage(chat_id=Father_ID, text='I\'ve restarted \nHome:', reply_markup=markup)
             #bot.sendMessage(chat_id=Mother_ID, text='I\'ve restarted \nHome:', reply_markup=markup)
             #self.BaleBotT = newThread(self.BaleBotDef)
@@ -1244,6 +1256,9 @@ class SyntaxUI(QMainWindow):
 
     def BaleBotDef(self):
         global update_id
+        global home_markup
+        global room_markup
+        global setting_markup
         try:
             for update in bot.get_updates(offset=update_id):
                 update_id = update.update_id + 1
@@ -1276,19 +1291,9 @@ class SyntaxUI(QMainWindow):
                         'Access denied!!!\n❌⛔🚫❌⛔🚫\n'
                         '✋You can\'t use this bot\nYour data sent to MAJN...')
                     elif (command == '/start'):
-                        markup = ReplyKeyboardMarkup(keyboard=[
-                            ['🎛️ Room 🎛️', '📊 Info 📊'],
-                            ['⏭', '⏯','⏮'],
-                            ['🔇', '🔊'],
-                            ['⚙ Setting ⚙']])
-                        bot.sendMessage(chat_id=chat_id, text='Home:', reply_markup=markup)
+                        bot.sendMessage(chat_id=chat_id, text='Home:', reply_markup=home_markup)
                     elif (command == '🏠 Home 🏠'):
-                        markup = ReplyKeyboardMarkup(keyboard=[
-                            ['🎛️ Room 🎛️', '📊 Info 📊'],
-                            ['⏭', '⏯','⏮'],
-                            ['🔇', '🔊'],
-                            ['⚙ Setting ⚙']])
-                        bot.sendMessage(chat_id=chat_id, text='Home:', reply_markup=markup)
+                        bot.sendMessage(chat_id=chat_id, text='Home:', reply_markup=home_markup)
                     elif (command == '📊 Info 📊'):
                         info = "        📊 Info 📊\nHello :)"
                         info += "\n"
@@ -1347,20 +1352,14 @@ class SyntaxUI(QMainWindow):
                         bot.sendMessage(chat_id, 'Volume has been increased...')
                         self.ChangeImageFading(self.MusicTabVolume, 7, 0.4, "Label/Music/High.png")
                     elif (command == '🎛️ Room 🎛️'):
-                        markup = ReplyKeyboardMarkup(keyboard=[
-                            ['💡', '🎧'],
-                            ['🔌', '🕯️'],
-                            ['🔒️', '🤖'],
-                            ['🏠 Home 🏠']
-                        ])
                         if (chat_id == MAJN_ID):
-                            bot.sendMessage(chat_id, 'Control your room Mohammadali:', reply_markup=markup)
+                            bot.sendMessage(chat_id, 'Control your room Mohammadali:', reply_markup=room_markup)
                         if (chat_id == Father_ID):
-                            bot.sendMessage(chat_id, 'Control your home Alireza:', reply_markup=markup)
+                            bot.sendMessage(chat_id, 'Control your home Alireza:', reply_markup=room_markup)
                         if (chat_id == Alirezaishisname):
-                            bot.sendMessage(chat_id, 'Control Hydronable:', reply_markup=markup)
+                            bot.sendMessage(chat_id, 'Control Hydronable:', reply_markup=room_markup)
                         if (chat_id == Mother_ID):
-                            bot.sendMessage(chat_id, 'Control your home Saedeh:', reply_markup=markup)
+                            bot.sendMessage(chat_id, 'Control your home Saedeh:', reply_markup=room_markup)
                     elif (command == '💡'):
                         self.RoomTabBTN1ON.click()
                         newOrder(self,'Lamp' + " : " + str(self.RoomTabBTN1Bool))
@@ -1392,18 +1391,13 @@ class SyntaxUI(QMainWindow):
                         newOrder(self, 'AI' + " : " + str( self.SettingTabAIB))
                         bot.sendMessage(chat_id, '🤖 is : ' + str( self.SettingTabAIB))
                     elif (command == '⚙ Setting ⚙'):
-                        markup = ReplyKeyboardMarkup(keyboard=[ ['⏰ Alarm ⏰'],
-                                                                ['🕋 Sobh 🕋️'],
-                                                                ['🕋 Zohr 🕋️'],
-                                                                ['🕋 Maghreb 🕋'],
-                                                                ['🏠 Home 🏠']])
-                        bot.sendMessage(chat_id, 'Setting :', reply_markup=markup)
+                        bot.sendMessage(chat_id, 'Setting :', reply_markup=setting_markup)
                     elif (command == '📸' or command == 'Take a photo'):
                         # ! camera = PiCamera()
                         # ! time.sleep(2)
                         # ! camera.capture("img.png")
                         # ! del camera
-                        bot.sendMessage(MAJN_ID, 'Photo captured, Sending...')
+                        bot.sendMessage(MAJN_ID, 'Photo has taken, Sending...')
                         try:
                             bot.send_photo(MAJN_ID, photo=open('img.png', 'rb'))
                         except:
@@ -1423,13 +1417,9 @@ class SyntaxUI(QMainWindow):
                         bot.sendMessage(chat_id, '🕋 Maghreb 🕋 is : ' + str(self.AzanMaghreb))
                     else:
                         bot.sendMessage(chat_id, 'Wrong Command!!!')
-                        markup = ReplyKeyboardMarkup(keyboard=[
-                            ['🎛️ Room 🎛️', '📊 Info 📊'],
-                            ['⏭','⏯','⏮'],
-                            ['🔇', '🔊'],
-                            ['⚙ Setting ⚙']])
-                        bot.sendMessage(chat_id, 'Home:', reply_markup=markup)
+                        bot.sendMessage(chat_id, 'Home:', reply_markup=home_markup)
                     break
+                break
         except NetworkError:
             x=0
         except Unauthorized:
@@ -1440,112 +1430,14 @@ class SyntaxUI(QMainWindow):
         self.HomeBTN.click()
         self.HomeState = "Home"
         self.FadeUpFadeDown(self.MenuHomeBTN, 17, 0.7, 0.15)
-    '''
+
     def AIDef(self):
         now = datetime.now()
-        if(now.minute == 35 and now.second == 43):
-            if(self.RoomTabBTN3Bool is False):
-                self.RoomTabBTN3ON.click()
-        if (now.hour < 2 or now.hour >= int(self.SettingTabH.text()) or now.hour >= int(self.AzanMorning[:2])):
-            if(self.RoomTabBTN4Bool is False):
-                self.RoomTabBTN4ON.click()
-        else:
-            if(self.RoomTabBTN4Bool):
-                self.RoomTabBTN4ON.click()
-        if(self.SettingTabAIB):
-            if(GPIO.input(16)):
-                self.ANNLamp = int(self.ANNH[now.hour]) + self.ANNZ * int(GPIO.input(16))
-                self.ANNHT += 1
-                if(self.ANNHT>120):
-                    if(self.ANNH[now.hour]<120):
-                        self.ANNH[now.hour] += 4
-                    self.ANNHT = 0
-                    ANNFile = open("ANN.txt", 'w')
-                    for i in range(24):
-                        if(now.hour == i):
-                            ANNFile.writelines(str(ANNH[now.hour]))
-                        else:
-                            ANNFile.writelines(self.ANNH[i])
-                    ANNFile.close()
-            if(bool(GPIO.input(16)) is False):
-                self.ANNLamp = self.ANNH[now.hour] + self.ANNZ * int(GPIO.input(16))
-                self.ANNHT -= 1
-                if(self.ANNHT<-900):
-                    if(self.ANNH[now.hour]>-50):
-                        self.ANNH[now.hour] -= 35
-                    self.ANNHT = 0
-                    ANNFile = open("ANN.txt", 'w')
-                    for i in range(24):
-                        if(now.hour == i):
-                            ANNFile.writelines(str(self.ANNH[now.hour]))
-                        else:
-                            ANNFile.writelines(self.ANNH[i])
-                    ANNFile.close()
-            if (self.ANNLamp >= 80):
-                if (self.RoomTabBTN1Bool == False):
-                    self.RoomTabBTN1ON.click()
-            if (self.ANNLamp < 60):
-                if (self.RoomTabBTN1Bool == True):
-                    self.RoomTabBTN1ON.click()
         if (now.minute == 35 and now.second == 35 and now.hour >= 7):
-            bot.sendMessage(MAJN_ID, '❤️')
-        if (now.minute == 35 and now.second == 35 and now.hour == self.randh):
-            bot.sendMessage(Father_ID, '❤️ Hello father ❤️ \nJust I wanna tell you:\nI love U \n❤️❤️❤️❤️❤️❤️❤️❤️❤️')
-            bot.sendMessage(Father_ID, '❤️')
-            bot.sendMessage(Mother_ID, '❤️ Hello Mother ❤️ \nJust I wanna tell you:\nI love U \n❤️❤️❤️❤️❤️❤️❤️❤️❤️')
-            bot.sendMessage(Mother_ID, '❤️')
-        if (now.minute == 35 and now.second == 35 and now.hour == 6):
-            if (not None):
-                info = "Hello World\nGood morning :) \n❤️Alireza❤️"
-                info += self.HomeTabDate.text() + "\n"
-                info += self.HomeTabDay.text() + "\n"
-                info += "\n🌦️" + self.HomeTabWeatherLabel.text() + "🌦️\n"
-                info += "\n🕞" + self.HomeTabClockH.text() + ":" + self.HomeTabClockM.text() + ":" + self.HomeTabClockS.text() + "🕞\n"
-                info += "\n" + "🌡 : " + str(self.OutsideTempW)[:4] + "C 💧 : " + str(self.OutSideHumidityW)[:4] + "%\n"
-                info += "\n🕋Sobh :       " + self.AzanMorning + " " + str(self.AzanSobh) + "\n"
-                info += "🕋Zohr :        " + self.AzanNoon + " " + str(self.AzanZohr) + "\n"
-                info += "🕋Magherb : " + self.AzanNight + " " + str(self.AzanMaghreb) + "\n"
-                info += "Have a good day bro :)"
-                bot.sendMessage(Alirezaishisname, info)
-            if (not None):
-                info = "Hello \nGood morning :) \n❤️Father❤️"
-                info += self.HomeTabDate.text() + "\n"
-                info += self.HomeTabDay.text() + "\n"
-                info += "\n🌦️" + self.HomeTabWeatherLabel.text() + "🌦️\n"
-                info += "\n🕞" + self.HomeTabClockH.text() + ":" + self.HomeTabClockM.text() + ":" + self.HomeTabClockS.text() + "🕞\n"
-                info += "\n" + "🌡 : " + str(self.OutsideTempW)[:4] + "C 💧 : " + str(self.OutSideHumidityW)[:4] + "%\n"
-                info += "\n🕋Sobh :       " + self.AzanMorning + " " + str(self.AzanSobh) + "\n"
-                info += "🕋Zohr :        " + self.AzanNoon + " " + str(self.AzanZohr) + "\n"
-                info += "🕋Magherb : " + self.AzanNight + " " + str(self.AzanMaghreb) + "\n"
-                info += "Have a good day father :)"
-                bot.sendMessage(Father_ID, info)
-            if (not None):
-                info = "Hello \nGood morning :) \n❤Mother❤️"
-                info += self.HomeTabDate.text() + "\n"
-                info += self.HomeTabDay.text() + "\n"
-                info += "\n🌦️" + self.HomeTabWeatherLabel.text() + "🌦️\n"
-                info += "\n🕞" + self.HomeTabClockH.text() + ":" + self.HomeTabClockM.text() + ":" + self.HomeTabClockS.text() + "🕞\n"
-                info += "\n" + "🌡 : " + str(self.OutsideTempW)[:4] + "C 💧 : " + str(self.OutSideHumidityW)[:4] + "%\n"
-                info += "\n🕋Sobh :       " + self.AzanMorning + " " + str(self.AzanSobh) + "\n"
-                info += "🕋Zohr :        " + self.AzanNoon + " " + str(self.AzanZohr) + "\n"
-                info += "🕋Magherb : " + self.AzanNight + " " + str(self.AzanMaghreb) + "\n"
-                info += "Have a good day Mother :)"
-                bot.sendMessage(Mother_ID, info)
-            if (not None):
-                info = "Hello \nGood morning :) \n❤️MAJN❤️"
-                info += self.HomeTabDate.text() + "\n"
-                info += self.HomeTabDay.text() + "\n"
-                info += "\n🌦️" + self.HomeTabWeatherLabel.text() + "🌦️\n"
-                info += "\n🕞" + self.HomeTabClockH.text() + ":" + self.HomeTabClockM.text() + ":" + self.HomeTabClockS.text() + "🕞\n"
-                info += "\n" + "🌡 : " + str(self.OutsideTempW)[:4] + "C 💧 : " + str(self.OutSideHumidityW)[:4] + "%\n"
-                info += "\n🕋Sobh :       " + self.AzanMorning + " " + str(self.AzanSobh) + "\n"
-                info += "🕋Zohr :        " + self.AzanNoon + " " + str(self.AzanZohr) + "\n"
-                info += "🕋Magherb : " + self.AzanNight + " " + str(self.AzanMaghreb) + "\n"
-                info += "Have a good day MAJN :)"
-                bot.sendMessage(MAJN_ID, info)
+            bot.sendMessage(MAJN_ID, '❤ 35 ❤')
         if (now.minute == 0 and now.second == 35 and now.hour == 0):
             self.randh = randrange(0, 23)
-        if (now.hour == 7 and now.minute == 35 and now.second%20==5):
+        if (now.hour == 7 and now.minute == 35 and now.second == 5):
             self.timeir = str(urllib3.PoolManager().request('GET', 'http://www.time.ir/').data)
             self.AzanMorningInt = self.timeir.find("lblAzanMorning\" class=\"inlineBlock ltr text-nowrap\">") + len(
                 "lblAzanMorning\" class=\"inlineBlock ltr text-nowrap\">")
@@ -1595,12 +1487,12 @@ class SyntaxUI(QMainWindow):
             info += "\n🌦️" + self.HomeTabWeatherLabel.text() + "🌦️\n"
             info += "\n🕞" + self.HomeTabClockH.text() + ":" + self.HomeTabClockM.text() + ":" + self.HomeTabClockS.text() + "🕞\n"
             info += "\n" + "🌡 : " + str(self.OutsideTempW)[:4] + "C 💧 : " + str(self.OutSideHumidityW)[:4] + "%\n"
-            info += "\n🕋Sobh :       " + self.AzanMorning + " " + str(self.AzanSobh) + "\n"
-            info += "🕋Zohr :        " + self.AzanNoon + " " + str(self.AzanZohr) + "\n"
-            info += "🕋Magherb : " + self.AzanNight + " " + str(self.AzanMaghreb) + "\n"
+            info += "\n🕋 Sobh :       " + self.AzanMorning + " " + str(self.AzanSobh) + "\n"
+            info += "🕋 Zohr :        " + self.AzanNoon + " " + str(self.AzanZohr) + "\n"
+            info += "🕋 Magherb : " + self.AzanNight + " " + str(self.AzanMaghreb) + "\n"
             info += "Have a good day MAJN :)"
             bot.sendMessage(MAJN_ID, info)
-'''
+
     def AlarmDef(self):
         now = datetime.now()
         pygame.init()
@@ -2714,14 +2606,14 @@ class SyntaxUI(QMainWindow):
     def SecurityDef(self):
         if (self.securityBool == True): # ! and  int(GPIO.input(16)) == 1):
             if (self.securityCount == 0):
-                self.bot.sendMessage(MAJN_ID, "Someone in your room...")
+                self.bot.sendMessage(MAJN_ID, "Someone is in your room...")
                 # ! camera = PiCamera()
                 # ! time.sleep(2)
                 # ! camera.capture("img.png")
                 # ! del camera
-                bot.sendMessage(MAJN_ID, 'Photo captured, Sending...')
+                bot.sendMessage(MAJN_ID, 'Photo has taken, Sending...')
                 try:
-                    bot.send_photo(MAJN_ID, photo=open('img.png', 'rb'))
+                    bot.send_photo(MAJN_ID, photo=open('img.png', 'rb'),caption= "❗ Someone is in your Room ❗")
                 except:
                     pass
                 bot.sendMessage(MAJN_ID, 'Done')
