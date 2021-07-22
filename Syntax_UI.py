@@ -15,6 +15,7 @@ import urllib3
 from telegram import ReplyKeyboardMarkup, Bot
 from telegram.error import NetworkError, Unauthorized
 import pygame
+from time import sleep
 # ! from picamera import PiCamera
 
 update_id = None
@@ -1397,6 +1398,17 @@ class SyntaxUI(QMainWindow):
                                                                 ['🕋 Maghreb 🕋'],
                                                                 ['🏠 Home 🏠']])
                         bot.sendMessage(chat_id, 'Setting :', reply_markup=markup)
+                    elif (command == '📸' or command == 'Take a photo'):
+                        # ! camera = PiCamera()
+                        # ! time.sleep(2)
+                        # ! camera.capture("img.png")
+                        # ! del camera
+                        bot.sendMessage(MAJN_ID, 'Photo captured, Sending...')
+                        try:
+                            bot.send_photo(MAJN_ID, photo=open('img.png', 'rb'))
+                        except:
+                            pass
+                        bot.sendMessage(MAJN_ID, 'Done')
                     elif (command == '⏰ Alarm ⏰'):
                         self.SettingTabAlarm.click()
                         bot.sendMessage(chat_id, '⏰ Alarm ⏰ is : ' + str(not self.SettingTabAlarmB))
@@ -2705,9 +2717,14 @@ class SyntaxUI(QMainWindow):
                 self.bot.sendMessage(MAJN_ID, "Someone in your room...")
                 # ! camera = PiCamera()
                 # ! time.sleep(2)
-                # ! camera.capture("img.jpg")
+                # ! camera.capture("img.png")
                 # ! del camera
-                bot.send_photo(MAJN_ID, photo="img.jpg")
+                bot.sendMessage(MAJN_ID, 'Photo captured, Sending...')
+                try:
+                    bot.send_photo(MAJN_ID, photo=open('img.png', 'rb'))
+                except:
+                    pass
+                bot.sendMessage(MAJN_ID, 'Done')
             self.securityCount = self.securityCount + 1
             if (self.securityCount == 10):
                 self.securityCount = 0
