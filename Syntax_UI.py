@@ -232,7 +232,7 @@ class SyntaxUI(QMainWindow):
             self.HomeTabWeatherWidget.setStyleSheet("background:url(\"Label/HomeTabLabel2.png\");")
             self.HomeTabWeatherWidget.setGraphicsEffect(Opacity(0.5))
             r = requests.get(
-                'http://api.openweathermap.org/data/2.5/weather?q=Tehran&APPID=b3a9cd6b01d2ab3fe9f0187351659781')
+                'http://api.openweathermap.org/data/2.5/weather?q=Tehran&APPID=YoutToken')
             self.OutsideTempW = str(int(r.json()['main']['temp']) - 273.15)
             self.OutSideHumidityW = str(r.json()['main']['humidity'])
             self.HomeTabWeatherLabel = QLabel(self.HomeTabWeatherWidget)
@@ -1146,9 +1146,10 @@ class SyntaxUI(QMainWindow):
 
             self.security = QTimer(self)
             self.security.setInterval(500)
-            self.security.timeout.connect(self.SecurityDef(bot))
-            self.security.start()
             self.securityBool = False
+            self.bot = bot
+            self.security.timeout.connect(self.SecurityDef)
+            self.security.start()
             self.securityCount = 0
 
             # ! self.AITimer = QTimer(self)
@@ -1222,8 +1223,9 @@ class SyntaxUI(QMainWindow):
                 update_id = bot.get_updates()[0].update_id
             except IndexError:
                 update_id = None
+            self.update_id = update_id
             self.BaleBotT = QTimer(self)
-            self.BaleBotT.timeout.connect(self.BaleBotDef(bot))
+            self.BaleBotT.timeout.connect(self.BaleBotDef)
             self.BaleBotT.setInterval(10000)
             self.BaleBotT.start()
             self.BotDelayControl = 0
@@ -1246,9 +1248,9 @@ class SyntaxUI(QMainWindow):
             self.msgBox.setStyleSheet("color: blue;")
             self.hide()
 
-    def BaleBotDef(self,bot):
-        global update_id
-        # Request updates after the last update_id
+    def BaleBotDef(self):
+        update_id = self.update_id
+        bot = self.bot
         try:
             for update in bot.get_updates(offset=update_id, timeout=10):
                 update_id = update.update_id + 1
@@ -1264,7 +1266,6 @@ class SyntaxUI(QMainWindow):
                         self.LastOrderName = "Mother"
                     elif(update.effective_chat.id == Alirezaishisname):
                         self.LastOrderName = "AlirezaH"
-                    ReplyKeyboardMarkup = ReplyKeyboardMarkup
                     if (update.effective_chat.id != MAJN_ID and update.effective_chat.id != Father_ID and update.effective_chat.id != Mother_ID and update.effective_chat.id != Alirezaishisname):
                         text = "⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️\nSomeone used 3MAJN5 bot\n"
                         try:
@@ -1431,13 +1432,14 @@ class SyntaxUI(QMainWindow):
             # The user has removed or blocked the bot.
             update_id += 1
 
+
     def MenuHomeBTNDef(self):
         self.HomeBTN.click()
         self.HomeState = "Home"
         self.FadeUpFadeDown(self.MenuHomeBTN, 17, 0.7, 0.15)
     '''
     def AIDef(self):
-        now = datetime.datetime.now()
+        now = datetime.now()
         if(now.minute == 35 and now.second == 43):
             if(self.RoomTabBTN3Bool is False):
                 self.RoomTabBTN3ON.click()
@@ -1974,7 +1976,7 @@ class SyntaxUI(QMainWindow):
         self.SettingTabDefAnim6.start()
 
     def ClockHomeDef(self):
-        now = datetime.datetime.now()
+        now = datetime.now()
         if (self.HomeState == "Home"):
             self.HomeTabClockH.setText(str(int(now.hour)))
             self.HomeTabClockM.setText(now.strftime("%M"))
@@ -1995,7 +1997,7 @@ class SyntaxUI(QMainWindow):
                 self.weather = weather[0: weather.find("</span></div>")]
 
     def RoomTabBTN1Def(self):
-        now = datetime.datetime.now()
+        now = datetime.now()
         self.Clicked = True
         self.RoomTabBTN1Bool = not self.RoomTabBTN1Bool
         if (self.RoomTabBTN1Bool == True):
@@ -2298,7 +2300,7 @@ class SyntaxUI(QMainWindow):
             self.TempCoManualSpeedAnim.start()
 
     def TempCheckDef(self):
-        now = datetime.datetime.now()
+        now = datetime.now()
         if (int(now.minute) % 14 == 1 and int(now.second) == 5):
             hm, tm = 35, 35 # ! Adafruit_DHT.read_retry(22, 4)
             self.TempCheckAve = tm
@@ -2319,7 +2321,7 @@ class SyntaxUI(QMainWindow):
                     self.TempCoTabGraphH[n].setGraphicsEffect(Opacity(0.4))
 
     def WeatherCheck(self):
-        now = datetime.datetime.now()
+        now = datetime.now()
         if (int(now.minute) % 25 == 0):
             r = requests.get(
                 'http://api.openweathermap.org/data/2.5/weather?q=Tehran&APPID=b3a9cd6b01d2ab3fe9f0187351659781')
@@ -2365,7 +2367,7 @@ class SyntaxUI(QMainWindow):
         BGFile.close()
 
     def BGTimerDef(self):
-        now = datetime.datetime.now()
+        now = datetime.now()
         if (now.minute % 2 == 0 and now.second % 35 == 0 and self.AzanPlaying == False and self.AlarmPlaying == False):
             self.BGLabel2.setPixmap(QPixmap(self.BGPath + self.BGPathL[self.BGImagesNUM]))
             opacity = QGraphicsOpacityEffect(self)
@@ -2713,10 +2715,10 @@ class SyntaxUI(QMainWindow):
         pygame.init()
         return pygame.mixer.music.unpause()
 
-    def SecurityDef(self, bot):
+    def SecurityDef(self):
         if (self.securityBool == True): # ! and  int(GPIO.input(16)) == 1):
             if (self.securityCount == 0):
-                bot.sendMessage(MAJN_ID, "Someone in your room...")
+                self.bot.sendMessage(MAJN_ID, "Someone in your room...")
             self.securityCount = self.securityCount + 1
             if (self.securityCount == 10):
                 self.securityCount = 0
