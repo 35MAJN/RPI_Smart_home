@@ -1,7 +1,9 @@
 from PyQt4.QtGui import QMainWindow, QFileDialog, QLabel, QWidget, QPixmap, QIcon
-from PyQt4.QtGui import QPushButton, QFont, QMessageBox, QDesktopWidget
+from PyQt4.QtGui import QPushButton, QFont, QMessageBox, QDesktopWidget, QGraphicsOpacityEffect
+from PyQt4.QtGui import QGraphicsBlurEffect
 from PyQt4.QtCore import Qt, QSize, QTimer, QPropertyAnimation ,QStateMachine, QState, QPointF
 from PyQt4.QtCore import QParallelAnimationGroup, QSequentialAnimationGroup, QEasingCurve
+from PyQt4.QtCore import QPoint
 from os import path, walk
 import shutil
 from array import array
@@ -2054,7 +2056,7 @@ class SyntaxUI(QMainWindow):
             self.FadeOutIn(self.RoomTabBTN3ON, 31, 0.6, 0)
             self.FadeOutIn(self.RoomTabBTN3Label2, 32, 0.6, 0)
             self.FadeOutIn(self.RoomTabBTN3Label3, 33, 0.6, 0)
-        GPIO.output(22, self.RoomTabBTN3Bool)
+        # ! GPIO.output(22, self.RoomTabBTN3Bool)
 
     def RoomTabBTN4Def(self):
         self.Clicked = True
@@ -2073,7 +2075,7 @@ class SyntaxUI(QMainWindow):
             self.FadeOutIn(self.RoomTabBTN4ON, 42, 0.6, 0)
             self.FadeOutIn(self.RoomTabBTN4Label2, 43, 0.6, 0)
             self.FadeOutIn(self.RoomTabBTN4Label3, 44, 0.6, 0)
-        GPIO.output(19, self.RoomTabBTN4Bool)
+        # ! GPIO.output(19, self.RoomTabBTN4Bool)
 
     def RoomTabBTNsDef(self):
         if (self.HomeState == "Room"):
@@ -2158,14 +2160,14 @@ class SyntaxUI(QMainWindow):
         self.Clicked = True
         self.SettingTabAlarmB = not self.SettingTabAlarmB
         if (self.SettingTabAlarmB == True):
-            self.SettingTabAlarmAnim.setStartValue(QtCore.QRect(750, 250, 750, 200))
-            self.SettingTabAlarmAnim.setEndValue(QtCore.QRect(0, 250, 750, 200))
+            self.SettingTabAlarmAnim.setStartValue(750, 250, 750, 200)
+            self.SettingTabAlarmAnim.setEndValue(0, 250, 750, 200)
             self.SettingTabAlarmAnim.setDuration(500)
             self.SettingTabAlarmAnim.start()
             self.ChangeImageFading(self.SettingTabAlarm, 15, 0.4, "Label/Setting/AlarmON.png")
         else:
-            self.SettingTabAlarmAnim.setStartValue(QtCore.QRect(0, 250, 750, 200))
-            self.SettingTabAlarmAnim.setEndValue(QtCore.QRect(750, 250, 750, 200))
+            self.SettingTabAlarmAnim.setStartValue(0, 250, 750, 200)
+            self.SettingTabAlarmAnim.setEndValue(750, 250, 750, 200)
             self.SettingTabAlarmAnim.setDuration(500)
             self.SettingTabAlarmAnim.start()
             self.ChangeImageFading(self.SettingTabAlarm, 16, 0.4, "Label/Setting/AlarmOFF.png")
@@ -2241,63 +2243,63 @@ class SyntaxUI(QMainWindow):
         self.TempCoTabModeBool = not self.TempCoTabModeBool
         if (self.TempCoTabModeBool == True):  # Manual
             self.TempCoModeAnim = QPropertyAnimation(self.TempCoTabModeLabel1, 'pos')
-            self.TempCoModeAnim.setStartValue(QtCore.QPoint(20, 19))
-            self.TempCoModeAnim.setEndValue(QtCore.QPoint(20, 81))
+            self.TempCoModeAnim.setStartValue(QPoint(20, 19))
+            self.TempCoModeAnim.setEndValue(QPoint(20, 81))
             self.TempCoModeAnim.start()
             self.TempCoTabManualWidgetAnim = QPropertyAnimation(self.TempCoTabManualWidget, 'pos')
-            self.TempCoTabManualWidgetAnim.setStartValue(QtCore.QPoint(550, 300))
-            self.TempCoTabManualWidgetAnim.setEndValue(QtCore.QPoint(250, 300))
+            self.TempCoTabManualWidgetAnim.setStartValue(QPoint(550, 300))
+            self.TempCoTabManualWidgetAnim.setEndValue(QPoint(250, 300))
             self.TempCoTabManualWidgetAnim.start()
             self.TempCoModeAnim.start()
             self.TempCoTabAutoWidgetAnim = QPropertyAnimation(self.TempCoTabAutoWidget, 'pos')
-            self.TempCoTabAutoWidgetAnim.setStartValue(QtCore.QPoint(215, 300))
-            self.TempCoTabAutoWidgetAnim.setEndValue(QtCore.QPoint(550, 300))
+            self.TempCoTabAutoWidgetAnim.setStartValue(QPoint(215, 300))
+            self.TempCoTabAutoWidgetAnim.setEndValue(QPoint(550, 300))
             self.TempCoTabAutoWidgetAnim.start()
         if (self.TempCoTabModeBool == False):  # Manual
             self.TempCoModeAnim = QPropertyAnimation(self.TempCoTabModeLabel1, 'pos')
-            self.TempCoModeAnim.setStartValue(QtCore.QPoint(20, 81))
-            self.TempCoModeAnim.setEndValue(QtCore.QPoint(20, 19))
+            self.TempCoModeAnim.setStartValue(QPoint(20, 81))
+            self.TempCoModeAnim.setEndValue(QPoint(20, 19))
             self.TempCoModeAnim.start()
             self.TempCoTabManualWidgetAnim = QPropertyAnimation(self.TempCoTabManualWidget, 'pos')
-            self.TempCoTabManualWidgetAnim.setStartValue(QtCore.QPoint(250, 300))
-            self.TempCoTabManualWidgetAnim.setEndValue(QtCore.QPoint(550, 300))
+            self.TempCoTabManualWidgetAnim.setStartValue(QPoint(250, 300))
+            self.TempCoTabManualWidgetAnim.setEndValue(QPoint(550, 300))
             self.TempCoTabManualWidgetAnim.start()
             self.TempCoModeAnim.start()
             self.TempCoTabAutoWidgetAnim = QPropertyAnimation(self.TempCoTabAutoWidget, 'pos')
-            self.TempCoTabAutoWidgetAnim.setStartValue(QtCore.QPoint(550, 300))
-            self.TempCoTabAutoWidgetAnim.setEndValue(QtCore.QPoint(215, 300))
+            self.TempCoTabAutoWidgetAnim.setStartValue(QPoint(550, 300))
+            self.TempCoTabAutoWidgetAnim.setEndValue(QPoint(215, 300))
             self.TempCoTabAutoWidgetAnim.start()
 
     def TempCoTabManualTurnDef(self):
         self.TempCoTabManualTurnBool = not self.TempCoTabManualTurnBool
         if (self.TempCoTabManualTurnBool == True):  # Manual
             self.TempCoManualTurnAnim = QPropertyAnimation(self.TempCoTabManualTurnLabel, 'pos')
-            self.TempCoManualTurnAnim.setStartValue(QtCore.QPoint(125, 77))
-            self.TempCoManualTurnAnim.setEndValue(QtCore.QPoint(125, 23))
+            self.TempCoManualTurnAnim.setStartValue(QPoint(125, 77))
+            self.TempCoManualTurnAnim.setEndValue(QPoint(125, 23))
             self.TempCoManualTurnAnim.start()
         if (self.TempCoTabManualTurnBool == False):  # Manual
             self.TempCoManualTurnAnim = QPropertyAnimation(self.TempCoTabManualTurnLabel, 'pos')
-            self.TempCoManualTurnAnim.setStartValue(QtCore.QPoint(125, 23))
-            self.TempCoManualTurnAnim.setEndValue(QtCore.QPoint(125, 77))
+            self.TempCoManualTurnAnim.setStartValue(QPoint(125, 23))
+            self.TempCoManualTurnAnim.setEndValue(QPoint(125, 77))
             self.TempCoManualTurnAnim.start()
 
     def TempCoTabManualSpeedDef(self):
         self.TempCoTabManualSpeedBool = not self.TempCoTabManualSpeedBool
         if (self.TempCoTabManualSpeedBool == True):  # Manual
             self.TempCoManualSpeedAnim = QPropertyAnimation(self.TempCoTabManualSpeedLabel, 'pos')
-            self.TempCoManualSpeedAnim.setStartValue(QtCore.QPoint(29, 77))
-            self.TempCoManualSpeedAnim.setEndValue(QtCore.QPoint(29, 23))
+            self.TempCoManualSpeedAnim.setStartValue(QPoint(29, 77))
+            self.TempCoManualSpeedAnim.setEndValue(QPoint(29, 23))
             self.TempCoManualSpeedAnim.start()
         if (self.TempCoTabManualSpeedBool == False):  # Manual
             self.TempCoManualSpeedAnim = QPropertyAnimation(self.TempCoTabManualSpeedLabel, 'pos')
-            self.TempCoManualSpeedAnim.setStartValue(QtCore.QPoint(29, 23))
-            self.TempCoManualSpeedAnim.setEndValue(QtCore.QPoint(29, 77))
+            self.TempCoManualSpeedAnim.setStartValue(QPoint(29, 23))
+            self.TempCoManualSpeedAnim.setEndValue(QPoint(29, 77))
             self.TempCoManualSpeedAnim.start()
 
     def TempCheckDef(self):
         now = datetime.datetime.now()
         if (int(now.minute) % 14 == 1 and int(now.second) == 5):
-            hm, tm = Adafruit_DHT.read_retry(22, 4)
+            hm, tm = 35, 35 # ! Adafruit_DHT.read_retry(22, 4)
             self.TempCheckAve = tm
             self.HumiCheckAve = hm
             self.TempCoTabAutoOutsideTempTXT.setText(str(int(self.TempCheckAve)))
@@ -2305,8 +2307,8 @@ class SyntaxUI(QMainWindow):
                 if (n == int(now.hour) - 1):
                     self.TempClockInHour[n] = float(tm)
                     self.TempCoTabGraphH[n].setGeometry(
-                        QtCore.QRect(53 + n * (454 / 23), 215 - ((self.TempClockInHour[n] - 19) * (185 / 12)), 10,
-                                     ((self.TempClockInHour[n] - 19) * (185 / 12))))
+                        53 + n * (454 / 23), 215 - ((self.TempClockInHour[n] - 19) * (185 / 12)), 10,
+                                     ((self.TempClockInHour[n] - 19) * (185 / 12)))
                     if (self.TempClockInHour[n] <= 21):
                         self.TempCoTabGraphH[n].setStyleSheet(self.TempCoSetStyleSheetL)
                     elif (self.TempClockInHour[n] < 26):
@@ -2599,7 +2601,7 @@ class SyntaxUI(QMainWindow):
         self.MenuButtonGAnim = QPropertyAnimation(self.MenuButton, b"geometry")
         self.MenuButtonGAnim.setDuration(250)
         # self.MenuButtonGAnim.setStartValue(QRect(2, 30, 100, 100))
-        self.MenuButtonGAnim.setEndValue(QtCore.QRect(2, -2, 100, 100))
+        self.MenuButtonGAnim.setEndValue(2, -2, 100, 100)
         self.MenuButtonGAnim.start()
 
     def FadeUnfade(self, Widget, NumOfBTN):
@@ -2656,7 +2658,7 @@ class SyntaxUI(QMainWindow):
             self.ChangeImageFadeGroup[NumOfBTN].deleteLater()
         if (self.ChangeImageFade[NumOfBTN] != 0):
             self.ChangeImageFade[NumOfBTN].deleteLater()
-        self.ChangeImageFadeGroup[NumOfBTN] = QtCore.QSequentialAnimationGroup()
+        self.ChangeImageFadeGroup[NumOfBTN] = QSequentialAnimationGroup()
         self.effect1 = QGraphicsOpacityEffect()
         Widget.setGraphicsEffect(self.effect1)
         self.ChangeImageFade[NumOfBTN] = QPropertyAnimation(self.effect1, b"opacity")
@@ -2710,7 +2712,7 @@ class SyntaxUI(QMainWindow):
         pygame.init()
         return pygame.mixer.music.unpause()
 
-    def SecurityDef(self):
+    def SecurityDef(self, bot):
         if (self.securityBool == True and  int(GPIO.input(16)) == 1):
             if (self.securityCount == 0):
                 bot.sendMessage(MAJN_ID, "Someone in your room...")
