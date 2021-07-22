@@ -19,7 +19,7 @@ import pygame
 MAJN_ID = 577321253
 Father_ID = 1288912519
 Mother_ID = 518708663
-Alirezaishisname = 714142326
+Alirezaishisname = 7141423261
 
 class SyntaxUI(QMainWindow):
     def __init__(self, bot):
