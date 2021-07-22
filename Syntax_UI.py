@@ -1493,6 +1493,12 @@ class SyntaxUI(QMainWindow):
             info += "Have a good day MAJN :)"
             bot.sendMessage(MAJN_ID, info)
 
+        if (self.SettingTabAIB):
+            if(GPIO.input(16) and self.RoomTabBTN1Bool is False):
+                self.RoomTabBTN1ON.click()
+            elif(GPIO.input(16) is False and self.RoomTabBTN1Bool):
+                self.RoomTabBTN1ON.click()
+
     def AlarmDef(self):
         now = datetime.now()
         pygame.init()
