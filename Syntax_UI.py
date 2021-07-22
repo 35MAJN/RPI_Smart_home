@@ -12,17 +12,19 @@ import requests
 from datetime import datetime
 from math import sin
 import urllib3
-from telegram import ReplyKeyboardMarkup
+from telegram import ReplyKeyboardMarkup, Bot
 from telegram.error import NetworkError, Unauthorized
 import pygame
 
+update_id = None
 MAJN_ID = 577321253
 Father_ID = 1288912519
 Mother_ID = 518708663
 Alirezaishisname = 7141423261
+bot = Bot(token='YourToke', base_url="https://tapi.bale.ai/")
 
 class SyntaxUI(QMainWindow):
-    def __init__(self, bot):
+    def __init__(self):
         super(self.__class__, self).__init__()
         if ("Ui Setup" is not None):
             self.setObjectName("Syntax")
@@ -232,7 +234,7 @@ class SyntaxUI(QMainWindow):
             self.HomeTabWeatherWidget.setStyleSheet("background:url(\"Label/HomeTabLabel2.png\");")
             self.HomeTabWeatherWidget.setGraphicsEffect(Opacity(0.5))
             r = requests.get(
-                'http://api.openweathermap.org/data/2.5/weather?q=Tehran&APPID=YoutToken')
+                'http://api.openweathermap.org/data/2.5/weather?q=Tehran&APPID=Yours')
             self.OutsideTempW = str(int(r.json()['main']['temp']) - 273.15)
             self.OutSideHumidityW = str(r.json()['main']['humidity'])
             self.HomeTabWeatherLabel = QLabel(self.HomeTabWeatherWidget)
@@ -1223,7 +1225,6 @@ class SyntaxUI(QMainWindow):
                 update_id = bot.get_updates()[0].update_id
             except IndexError:
                 update_id = None
-            self.update_id = update_id
             self.BaleBotT = QTimer(self)
             self.BaleBotT.timeout.connect(self.BaleBotDef)
             self.BaleBotT.setInterval(10000)
@@ -1249,8 +1250,7 @@ class SyntaxUI(QMainWindow):
             self.hide()
 
     def BaleBotDef(self):
-        update_id = self.update_id
-        bot = self.bot
+        global update_id
         try:
             for update in bot.get_updates(offset=update_id, timeout=10):
                 update_id = update.update_id + 1
