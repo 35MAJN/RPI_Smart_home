@@ -1,7 +1,7 @@
 from PyQt4.QtGui import QMainWindow, QFileDialog, QLabel, QWidget, QPixmap, QIcon
-from PyQt4.QtGui import QPushButton, QFont, QMessageBox
+from PyQt4.QtGui import QPushButton, QFont, QMessageBox, QDesktopWidget
 from PyQt4.QtCore import Qt, QSize, QTimer, QPropertyAnimation ,QStateMachine, QState, QPointF
-from PyQt4.QtCore import QParallelAnimationGroup, QSequentialAnimationGroup
+from PyQt4.QtCore import QParallelAnimationGroup, QSequentialAnimationGroup, QEasingCurve
 from os import path, walk
 import shutil
 from array import array
@@ -10,8 +10,14 @@ import requests
 from datetime import datetime
 from math import sin
 import urllib3
-import bot_users
 from telegram import ReplyKeyboardMarkup
+from telegram.error import NetworkError, Unauthorized
+import pygame
+
+MAJN_ID = 577321253
+Father_ID = 1288912519
+Mother_ID = 518708663
+Alirezaishisname = 714142326
 
 class SyntaxUI(QMainWindow):
     def setupUi(self, Syntax, bot):
@@ -1225,19 +1231,19 @@ class SyntaxUI(QMainWindow):
             self.msgBox = QMessageBox(self)
             self.msgBox.setWindowTitle("Msg")
             self.msgBox.setIcon(QMessageBox.Warning)
-            resolution = QtGui.QDesktopWidget().screenGeometry()
+            resolution = QDesktopWidget().screenGeometry()
             self.msgBox.move((resolution.width() / 2) - (self.frameSize().width() / 2) - 100,
                              (resolution.height() / 2) - (self.frameSize().height() / 2))
             self.msgBox.setWindowFlags(Qt.FramelessWindowHint)
             self.msgBox.setStyleSheet("color: blue;")
-            resolution = QtGui.QDesktopWidget().screenGeometry()
+            resolution = QDesktopWidget().screenGeometry()
             self.msgBox.move((resolution.width() / 2) - (self.frameSize().width() / 2) - 100,
                              (resolution.height() / 2) - (self.frameSize().height() / 2))
             self.msgBox.setWindowFlags(Qt.FramelessWindowHint)
             self.msgBox.setStyleSheet("color: blue;")
             self.hide()
 
-    def BaleBotDef(self):
+    def BaleBotDef(self,bot):
         global update_id
         # Request updates after the last update_id
         try:
@@ -1255,7 +1261,7 @@ class SyntaxUI(QMainWindow):
                         self.LastOrderName = "Mother"
                     elif(update.effective_chat.id == Alirezaishisname):
                         self.LastOrderName = "AlirezaH"
-                    ReplyKeyboardMarkup = telegram.ReplyKeyboardMarkup
+                    ReplyKeyboardMarkup = ReplyKeyboardMarkup
                     if (update.effective_chat.id != MAJN_ID and update.effective_chat.id != Father_ID and update.effective_chat.id != Mother_ID and update.effective_chat.id != Alirezaishisname):
                         text = "⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️\nSomeone used 3MAJN5 bot\n"
                         try:
@@ -1426,7 +1432,7 @@ class SyntaxUI(QMainWindow):
         self.HomeBTN.click()
         self.HomeState = "Home"
         self.FadeUpFadeDown(self.MenuHomeBTN, 17, 0.7, 0.15)
-
+    '''
     def AIDef(self):
         now = datetime.datetime.now()
         if(now.minute == 35 and now.second == 43):
@@ -1595,7 +1601,7 @@ class SyntaxUI(QMainWindow):
             info += "🕋Magherb : " + self.AzanNight + " " + str(self.AzanMaghreb) + "\n"
             info += "Have a good day MAJN :)"
             bot.sendMessage(MAJN_ID, info)
-
+'''
     def AlarmDef(self):
         now = datetime.datetime.now()
         pygame.init()
@@ -1768,200 +1774,200 @@ class SyntaxUI(QMainWindow):
 
     def HomeDefAnim(self):
         self.Clicked = True
-        self.HomeTabDefAnim1 = QtCore.QPropertyAnimation(self.HomeTabWidget, b"pos")
+        self.HomeTabDefAnim1 = QPropertyAnimation(self.HomeTabWidget, b"pos")
         self.HomeTabDefAnim1.setEndValue(QPointF(774, 50))
         self.HomeTabDefAnim1.setDuration(500)
-        self.HomeTabDefAnim1.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.HomeTabDefAnim1.setEasingCurve(QEasingCurve.OutQuart)
         self.HomeTabDefAnim1.start()
-        self.HomeTabDefAnim2 = QtCore.QPropertyAnimation(self.RoomTabWidget, b"pos")
+        self.HomeTabDefAnim2 = QPropertyAnimation(self.RoomTabWidget, b"pos")
         self.HomeTabDefAnim2.setEndValue(QPointF(1024, 50))
         self.HomeTabDefAnim2.setDuration(500)
-        self.HomeTabDefAnim2.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.HomeTabDefAnim2.setEasingCurve(QEasingCurve.OutQuart)
         self.HomeTabDefAnim2.start()
-        self.HomeTabDefAnim3 = QtCore.QPropertyAnimation(self.TempCoWidget, b"pos")
+        self.HomeTabDefAnim3 = QPropertyAnimation(self.TempCoWidget, b"pos")
         self.HomeTabDefAnim3.setEndValue(QPointF(1024, 50))
         self.HomeTabDefAnim3.setDuration(500)
-        self.HomeTabDefAnim3.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.HomeTabDefAnim3.setEasingCurve(QEasingCurve.OutQuart)
         self.HomeTabDefAnim3.start()
-        self.HomeTabDefAnim4 = QtCore.QPropertyAnimation(self.MusicTabWidget, b"pos")
+        self.HomeTabDefAnim4 = QPropertyAnimation(self.MusicTabWidget, b"pos")
         self.HomeTabDefAnim4.setEndValue(QPointF(1024, 125))
         self.HomeTabDefAnim4.setDuration(500)
-        self.HomeTabDefAnim4.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.HomeTabDefAnim4.setEasingCurve(QEasingCurve.OutQuart)
         self.HomeTabDefAnim4.start()
-        self.HomeTabDefAnim5 = QtCore.QPropertyAnimation(self.SocialTabWidget, b"pos")
+        self.HomeTabDefAnim5 = QPropertyAnimation(self.SocialTabWidget, b"pos")
         self.HomeTabDefAnim5.setEndValue(QPointF(1024, 50))
         self.HomeTabDefAnim5.setDuration(500)
-        self.HomeTabDefAnim5.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.HomeTabDefAnim5.setEasingCurve(QEasingCurve.OutQuart)
         self.HomeTabDefAnim5.start()
-        self.HomeTabDefAnim6 = QtCore.QPropertyAnimation(self.SettingWidget, b"pos")
+        self.HomeTabDefAnim6 = QPropertyAnimation(self.SettingWidget, b"pos")
         self.HomeTabDefAnim6.setEndValue(QPointF(1024, 75))
         self.HomeTabDefAnim6.setDuration(500)
-        self.HomeTabDefAnim6.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.HomeTabDefAnim6.setEasingCurve(QEasingCurve.OutQuart)
         self.HomeTabDefAnim6.start()
 
     def RoomDefAnim(self):
         self.Clicked = True
-        self.RoomTabDefAnim1 = QtCore.QPropertyAnimation(self.HomeTabWidget, b"pos")
+        self.RoomTabDefAnim1 = QPropertyAnimation(self.HomeTabWidget, b"pos")
         self.RoomTabDefAnim1.setEndValue(QPointF(1024, 50))
         self.RoomTabDefAnim1.setDuration(500)
-        self.RoomTabDefAnim1.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.RoomTabDefAnim1.setEasingCurve(QEasingCurve.OutQuart)
         self.RoomTabDefAnim1.start()
-        self.RoomTabDefAnim2 = QtCore.QPropertyAnimation(self.RoomTabWidget, b"pos")
+        self.RoomTabDefAnim2 = QPropertyAnimation(self.RoomTabWidget, b"pos")
         self.RoomTabDefAnim2.setEndValue(QPointF(274, 50))
         self.RoomTabDefAnim2.setDuration(500)
-        self.RoomTabDefAnim2.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.RoomTabDefAnim2.setEasingCurve(QEasingCurve.OutQuart)
         self.RoomTabDefAnim2.start()
-        self.RoomTabDefAnim3 = QtCore.QPropertyAnimation(self.TempCoWidget, b"pos")
+        self.RoomTabDefAnim3 = QPropertyAnimation(self.TempCoWidget, b"pos")
         self.RoomTabDefAnim3.setEndValue(QPointF(1024, 50))
         self.RoomTabDefAnim3.setDuration(500)
-        self.RoomTabDefAnim3.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.RoomTabDefAnim3.setEasingCurve(QEasingCurve.OutQuart)
         self.RoomTabDefAnim3.start()
-        self.RoomTabDefAnim4 = QtCore.QPropertyAnimation(self.MusicTabWidget, b"pos")
+        self.RoomTabDefAnim4 = QPropertyAnimation(self.MusicTabWidget, b"pos")
         self.RoomTabDefAnim4.setEndValue(QPointF(1024, 125))
         self.RoomTabDefAnim4.setDuration(500)
-        self.RoomTabDefAnim4.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.RoomTabDefAnim4.setEasingCurve(QEasingCurve.OutQuart)
         self.RoomTabDefAnim4.start()
-        self.RoomTabDefAnim5 = QtCore.QPropertyAnimation(self.SocialTabWidget, b"pos")
+        self.RoomTabDefAnim5 = QPropertyAnimation(self.SocialTabWidget, b"pos")
         self.RoomTabDefAnim5.setEndValue(QPointF(1024, 50))
         self.RoomTabDefAnim5.setDuration(500)
-        self.RoomTabDefAnim5.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.RoomTabDefAnim5.setEasingCurve(QEasingCurve.OutQuart)
         self.RoomTabDefAnim5.start()
-        self.RoomTabDefAnim6 = QtCore.QPropertyAnimation(self.SettingWidget, b"pos")
+        self.RoomTabDefAnim6 = QPropertyAnimation(self.SettingWidget, b"pos")
         self.RoomTabDefAnim6.setEndValue(QPointF(1024, 75))
         self.RoomTabDefAnim6.setDuration(500)
-        self.RoomTabDefAnim6.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.RoomTabDefAnim6.setEasingCurve(QEasingCurve.OutQuart)
         self.RoomTabDefAnim6.start()
 
     def TempCoDefAnim(self):
         self.Clicked = True
-        self.TempCoTabDefAnim1 = QtCore.QPropertyAnimation(self.HomeTabWidget, b"pos")
+        self.TempCoTabDefAnim1 = QPropertyAnimation(self.HomeTabWidget, b"pos")
         self.TempCoTabDefAnim1.setEndValue(QPointF(1024, 50))
         self.TempCoTabDefAnim1.setDuration(500)
-        self.TempCoTabDefAnim1.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.TempCoTabDefAnim1.setEasingCurve(QEasingCurve.OutQuart)
         self.TempCoTabDefAnim1.start()
-        self.TempCoTabDefAnim2 = QtCore.QPropertyAnimation(self.RoomTabWidget, b"pos")
+        self.TempCoTabDefAnim2 = QPropertyAnimation(self.RoomTabWidget, b"pos")
         self.TempCoTabDefAnim2.setEndValue(QPointF(1024, 50))
         self.TempCoTabDefAnim2.setDuration(500)
-        self.TempCoTabDefAnim2.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.TempCoTabDefAnim2.setEasingCurve(QEasingCurve.OutQuart)
         self.TempCoTabDefAnim2.start()
-        self.TempCoTabDefAnim3 = QtCore.QPropertyAnimation(self.TempCoWidget, b"pos")
+        self.TempCoTabDefAnim3 = QPropertyAnimation(self.TempCoWidget, b"pos")
         self.TempCoTabDefAnim3.setEndValue(QPointF(474, 50))
         self.TempCoTabDefAnim3.setDuration(500)
-        self.TempCoTabDefAnim3.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.TempCoTabDefAnim3.setEasingCurve(QEasingCurve.OutQuart)
         self.TempCoTabDefAnim3.start()
-        self.TempCoTabDefAnim4 = QtCore.QPropertyAnimation(self.MusicTabWidget, b"pos")
+        self.TempCoTabDefAnim4 = QPropertyAnimation(self.MusicTabWidget, b"pos")
         self.TempCoTabDefAnim4.setEndValue(QPointF(1024, 125))
         self.TempCoTabDefAnim4.setDuration(500)
-        self.TempCoTabDefAnim4.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.TempCoTabDefAnim4.setEasingCurve(QEasingCurve.OutQuart)
         self.TempCoTabDefAnim4.start()
-        self.TempCoTabDefAnim5 = QtCore.QPropertyAnimation(self.SocialTabWidget, b"pos")
+        self.TempCoTabDefAnim5 = QPropertyAnimation(self.SocialTabWidget, b"pos")
         self.TempCoTabDefAnim5.setEndValue(QPointF(1024, 50))
         self.TempCoTabDefAnim5.setDuration(500)
-        self.TempCoTabDefAnim5.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.TempCoTabDefAnim5.setEasingCurve(QEasingCurve.OutQuart)
         self.TempCoTabDefAnim5.start()
-        self.TempCoTabDefAnim6 = QtCore.QPropertyAnimation(self.SettingWidget, b"pos")
+        self.TempCoTabDefAnim6 = QPropertyAnimation(self.SettingWidget, b"pos")
         self.TempCoTabDefAnim6.setEndValue(QPointF(1024, 75))
         self.TempCoTabDefAnim6.setDuration(500)
-        self.TempCoTabDefAnim6.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.TempCoTabDefAnim6.setEasingCurve(QEasingCurve.OutQuart)
         self.TempCoTabDefAnim6.start()
 
     def MusicDefAnim(self):
         self.Clicked = True
-        self.MusicTabDefAnim1 = QtCore.QPropertyAnimation(self.HomeTabWidget, b"pos")
+        self.MusicTabDefAnim1 = QPropertyAnimation(self.HomeTabWidget, b"pos")
         self.MusicTabDefAnim1.setEndValue(QPointF(1024, 50))
         self.MusicTabDefAnim1.setDuration(500)
-        self.MusicTabDefAnim1.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.MusicTabDefAnim1.setEasingCurve(QEasingCurve.OutQuart)
         self.MusicTabDefAnim1.start()
-        self.MusicTabDefAnim2 = QtCore.QPropertyAnimation(self.RoomTabWidget, b"pos")
+        self.MusicTabDefAnim2 = QPropertyAnimation(self.RoomTabWidget, b"pos")
         self.MusicTabDefAnim2.setEndValue(QPointF(1024, 50))
         self.MusicTabDefAnim2.setDuration(500)
-        self.MusicTabDefAnim2.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.MusicTabDefAnim2.setEasingCurve(QEasingCurve.OutQuart)
         self.MusicTabDefAnim2.start()
-        self.MusicTabDefAnim3 = QtCore.QPropertyAnimation(self.TempCoWidget, b"pos")
+        self.MusicTabDefAnim3 = QPropertyAnimation(self.TempCoWidget, b"pos")
         self.MusicTabDefAnim3.setEndValue(QPointF(1024, 50))
         self.MusicTabDefAnim3.setDuration(500)
-        self.MusicTabDefAnim3.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.MusicTabDefAnim3.setEasingCurve(QEasingCurve.OutQuart)
         self.MusicTabDefAnim3.start()
-        self.MusicTabDefAnim4 = QtCore.QPropertyAnimation(self.MusicTabWidget, b"pos")
+        self.MusicTabDefAnim4 = QPropertyAnimation(self.MusicTabWidget, b"pos")
         self.MusicTabDefAnim4.setEndValue(QPointF(674, 125))
         self.MusicTabDefAnim4.setDuration(500)
-        self.MusicTabDefAnim4.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.MusicTabDefAnim4.setEasingCurve(QEasingCurve.OutQuart)
         self.MusicTabDefAnim4.start()
-        self.MusicTabDefAnim5 = QtCore.QPropertyAnimation(self.SocialTabWidget, b"pos")
+        self.MusicTabDefAnim5 = QPropertyAnimation(self.SocialTabWidget, b"pos")
         self.MusicTabDefAnim5.setEndValue(QPointF(1024, 50))
         self.MusicTabDefAnim5.setDuration(500)
-        self.MusicTabDefAnim5.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.MusicTabDefAnim5.setEasingCurve(QEasingCurve.OutQuart)
         self.MusicTabDefAnim5.start()
-        self.MusicTabDefAnim6 = QtCore.QPropertyAnimation(self.SettingWidget, b"pos")
+        self.MusicTabDefAnim6 = QPropertyAnimation(self.SettingWidget, b"pos")
         self.MusicTabDefAnim6.setEndValue(QPointF(1024, 75))
         self.MusicTabDefAnim6.setDuration(500)
-        self.MusicTabDefAnim6.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.MusicTabDefAnim6.setEasingCurve(QEasingCurve.OutQuart)
         self.MusicTabDefAnim6.start()
 
     def SocialDefAnim(self):
         self.Clicked = True
-        self.SocialTabDefAnim1 = QtCore.QPropertyAnimation(self.HomeTabWidget, b"pos")
+        self.SocialTabDefAnim1 = QPropertyAnimation(self.HomeTabWidget, b"pos")
         self.SocialTabDefAnim1.setEndValue(QPointF(1024, 50))
         self.SocialTabDefAnim1.setDuration(500)
-        self.SocialTabDefAnim1.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.SocialTabDefAnim1.setEasingCurve(QEasingCurve.OutQuart)
         self.SocialTabDefAnim1.start()
-        self.SocialTabDefAnim2 = QtCore.QPropertyAnimation(self.RoomTabWidget, b"pos")
+        self.SocialTabDefAnim2 = QPropertyAnimation(self.RoomTabWidget, b"pos")
         self.SocialTabDefAnim2.setEndValue(QPointF(1024, 50))
         self.SocialTabDefAnim2.setDuration(500)
-        self.SocialTabDefAnim2.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.SocialTabDefAnim2.setEasingCurve(QEasingCurve.OutQuart)
         self.SocialTabDefAnim2.start()
-        self.SocialTabDefAnim3 = QtCore.QPropertyAnimation(self.TempCoWidget, b"pos")
+        self.SocialTabDefAnim3 = QPropertyAnimation(self.TempCoWidget, b"pos")
         self.SocialTabDefAnim3.setEndValue(QPointF(1024, 50))
         self.SocialTabDefAnim3.setDuration(500)
-        self.SocialTabDefAnim3.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.SocialTabDefAnim3.setEasingCurve(QEasingCurve.OutQuart)
         self.SocialTabDefAnim3.start()
-        self.SocialTabDefAnim4 = QtCore.QPropertyAnimation(self.MusicTabWidget, b"pos")
+        self.SocialTabDefAnim4 = QPropertyAnimation(self.MusicTabWidget, b"pos")
         self.SocialTabDefAnim4.setEndValue(QPointF(1024, 125))
         self.SocialTabDefAnim4.setDuration(500)
-        self.SocialTabDefAnim4.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.SocialTabDefAnim4.setEasingCurve(QEasingCurve.OutQuart)
         self.SocialTabDefAnim4.start()
-        self.SocialTabDefAnim5 = QtCore.QPropertyAnimation(self.SocialTabWidget, b"pos")
+        self.SocialTabDefAnim5 = QPropertyAnimation(self.SocialTabWidget, b"pos")
         self.SocialTabDefAnim5.setEndValue(QPointF(274, 50))
         self.SocialTabDefAnim5.setDuration(500)
-        self.SocialTabDefAnim5.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.SocialTabDefAnim5.setEasingCurve(QEasingCurve.OutQuart)
         self.SocialTabDefAnim5.start()
-        self.SocialTabDefAnim6 = QtCore.QPropertyAnimation(self.SettingWidget, b"pos")
+        self.SocialTabDefAnim6 = QPropertyAnimation(self.SettingWidget, b"pos")
         self.SocialTabDefAnim6.setEndValue(QPointF(1024, 75))
         self.SocialTabDefAnim6.setDuration(500)
-        self.SocialTabDefAnim6.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.SocialTabDefAnim6.setEasingCurve(QEasingCurve.OutQuart)
         self.SocialTabDefAnim6.start()
 
     def SettingDefAnim(self):
         self.Clicked = True
-        self.SettingTabDefAnim1 = QtCore.QPropertyAnimation(self.HomeTabWidget, b"pos")
+        self.SettingTabDefAnim1 = QPropertyAnimation(self.HomeTabWidget, b"pos")
         self.SettingTabDefAnim1.setEndValue(QPointF(1024, 50))
         self.SettingTabDefAnim1.setDuration(500)
-        self.SettingTabDefAnim1.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.SettingTabDefAnim1.setEasingCurve(QEasingCurve.OutQuart)
         self.SettingTabDefAnim1.start()
-        self.SettingTabDefAnim2 = QtCore.QPropertyAnimation(self.RoomTabWidget, b"pos")
+        self.SettingTabDefAnim2 = QPropertyAnimation(self.RoomTabWidget, b"pos")
         self.SettingTabDefAnim2.setEndValue(QPointF(1024, 50))
         self.SettingTabDefAnim2.setDuration(500)
-        self.SettingTabDefAnim2.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.SettingTabDefAnim2.setEasingCurve(QEasingCurve.OutQuart)
         self.SettingTabDefAnim2.start()
-        self.SettingTabDefAnim3 = QtCore.QPropertyAnimation(self.TempCoWidget, b"pos")
+        self.SettingTabDefAnim3 = QPropertyAnimation(self.TempCoWidget, b"pos")
         self.SettingTabDefAnim3.setEndValue(QPointF(1024, 50))
         self.SettingTabDefAnim3.setDuration(500)
-        self.SettingTabDefAnim3.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.SettingTabDefAnim3.setEasingCurve(QEasingCurve.OutQuart)
         self.SettingTabDefAnim3.start()
-        self.SettingTabDefAnim4 = QtCore.QPropertyAnimation(self.MusicTabWidget, b"pos")
+        self.SettingTabDefAnim4 = QPropertyAnimation(self.MusicTabWidget, b"pos")
         self.SettingTabDefAnim4.setEndValue(QPointF(1024, 125))
         self.SettingTabDefAnim4.setDuration(500)
-        self.SettingTabDefAnim4.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.SettingTabDefAnim4.setEasingCurve(QEasingCurve.OutQuart)
         self.SettingTabDefAnim4.start()
-        self.SettingTabDefAnim5 = QtCore.QPropertyAnimation(self.SocialTabWidget, b"pos")
+        self.SettingTabDefAnim5 = QPropertyAnimation(self.SocialTabWidget, b"pos")
         self.SettingTabDefAnim5.setEndValue(QPointF(1024, 50))
         self.SettingTabDefAnim5.setDuration(500)
-        self.SettingTabDefAnim5.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.SettingTabDefAnim5.setEasingCurve(QEasingCurve.OutQuart)
         self.SettingTabDefAnim5.start()
-        self.SettingTabDefAnim6 = QtCore.QPropertyAnimation(self.SettingWidget, b"pos")
+        self.SettingTabDefAnim6 = QPropertyAnimation(self.SettingWidget, b"pos")
         self.SettingTabDefAnim6.setEndValue(QPointF(274, 75))
         self.SettingTabDefAnim6.setDuration(500)
-        self.SettingTabDefAnim6.setEasingCurve(QtCore.QEasingCurve.OutQuart)
+        self.SettingTabDefAnim6.setEasingCurve(QEasingCurve.OutQuart)
         self.SettingTabDefAnim6.start()
 
     def ClockHomeDef(self):
@@ -2010,7 +2016,7 @@ class SyntaxUI(QMainWindow):
                 self.ANNH[now.hour] -= 40
             elif(self.ANNH[now.hour] > -20):
                 self.ANNH[now.hour] -= 20
-        GPIO.output(6, self.RoomTabBTN1Bool)
+        # ! GPIO.output(6, self.RoomTabBTN1Bool)
 
     def RoomTabBTN2Def(self):
         self.Clicked = True
@@ -2029,7 +2035,7 @@ class SyntaxUI(QMainWindow):
             self.FadeOutIn(self.RoomTabBTN2ON, 20, 0.6, 0)
             self.FadeOutIn(self.RoomTabBTN2Label2, 21, 0.6, 0)
             self.FadeOutIn(self.RoomTabBTN2Label3, 22, 0.6, 0)
-        GPIO.output(27, self.RoomTabBTN2Bool)
+        # ! GPIO.output(27, self.RoomTabBTN2Bool)
 
     def RoomTabBTN3Def(self):
         self.Clicked = True
@@ -2234,30 +2240,30 @@ class SyntaxUI(QMainWindow):
     def TempCoModeDef(self):
         self.TempCoTabModeBool = not self.TempCoTabModeBool
         if (self.TempCoTabModeBool == True):  # Manual
-            self.TempCoModeAnim = QtCore.QPropertyAnimation(self.TempCoTabModeLabel1, 'pos')
+            self.TempCoModeAnim = QPropertyAnimation(self.TempCoTabModeLabel1, 'pos')
             self.TempCoModeAnim.setStartValue(QtCore.QPoint(20, 19))
             self.TempCoModeAnim.setEndValue(QtCore.QPoint(20, 81))
             self.TempCoModeAnim.start()
-            self.TempCoTabManualWidgetAnim = QtCore.QPropertyAnimation(self.TempCoTabManualWidget, 'pos')
+            self.TempCoTabManualWidgetAnim = QPropertyAnimation(self.TempCoTabManualWidget, 'pos')
             self.TempCoTabManualWidgetAnim.setStartValue(QtCore.QPoint(550, 300))
             self.TempCoTabManualWidgetAnim.setEndValue(QtCore.QPoint(250, 300))
             self.TempCoTabManualWidgetAnim.start()
             self.TempCoModeAnim.start()
-            self.TempCoTabAutoWidgetAnim = QtCore.QPropertyAnimation(self.TempCoTabAutoWidget, 'pos')
+            self.TempCoTabAutoWidgetAnim = QPropertyAnimation(self.TempCoTabAutoWidget, 'pos')
             self.TempCoTabAutoWidgetAnim.setStartValue(QtCore.QPoint(215, 300))
             self.TempCoTabAutoWidgetAnim.setEndValue(QtCore.QPoint(550, 300))
             self.TempCoTabAutoWidgetAnim.start()
         if (self.TempCoTabModeBool == False):  # Manual
-            self.TempCoModeAnim = QtCore.QPropertyAnimation(self.TempCoTabModeLabel1, 'pos')
+            self.TempCoModeAnim = QPropertyAnimation(self.TempCoTabModeLabel1, 'pos')
             self.TempCoModeAnim.setStartValue(QtCore.QPoint(20, 81))
             self.TempCoModeAnim.setEndValue(QtCore.QPoint(20, 19))
             self.TempCoModeAnim.start()
-            self.TempCoTabManualWidgetAnim = QtCore.QPropertyAnimation(self.TempCoTabManualWidget, 'pos')
+            self.TempCoTabManualWidgetAnim = QPropertyAnimation(self.TempCoTabManualWidget, 'pos')
             self.TempCoTabManualWidgetAnim.setStartValue(QtCore.QPoint(250, 300))
             self.TempCoTabManualWidgetAnim.setEndValue(QtCore.QPoint(550, 300))
             self.TempCoTabManualWidgetAnim.start()
             self.TempCoModeAnim.start()
-            self.TempCoTabAutoWidgetAnim = QtCore.QPropertyAnimation(self.TempCoTabAutoWidget, 'pos')
+            self.TempCoTabAutoWidgetAnim = QPropertyAnimation(self.TempCoTabAutoWidget, 'pos')
             self.TempCoTabAutoWidgetAnim.setStartValue(QtCore.QPoint(550, 300))
             self.TempCoTabAutoWidgetAnim.setEndValue(QtCore.QPoint(215, 300))
             self.TempCoTabAutoWidgetAnim.start()
@@ -2265,12 +2271,12 @@ class SyntaxUI(QMainWindow):
     def TempCoTabManualTurnDef(self):
         self.TempCoTabManualTurnBool = not self.TempCoTabManualTurnBool
         if (self.TempCoTabManualTurnBool == True):  # Manual
-            self.TempCoManualTurnAnim = QtCore.QPropertyAnimation(self.TempCoTabManualTurnLabel, 'pos')
+            self.TempCoManualTurnAnim = QPropertyAnimation(self.TempCoTabManualTurnLabel, 'pos')
             self.TempCoManualTurnAnim.setStartValue(QtCore.QPoint(125, 77))
             self.TempCoManualTurnAnim.setEndValue(QtCore.QPoint(125, 23))
             self.TempCoManualTurnAnim.start()
         if (self.TempCoTabManualTurnBool == False):  # Manual
-            self.TempCoManualTurnAnim = QtCore.QPropertyAnimation(self.TempCoTabManualTurnLabel, 'pos')
+            self.TempCoManualTurnAnim = QPropertyAnimation(self.TempCoTabManualTurnLabel, 'pos')
             self.TempCoManualTurnAnim.setStartValue(QtCore.QPoint(125, 23))
             self.TempCoManualTurnAnim.setEndValue(QtCore.QPoint(125, 77))
             self.TempCoManualTurnAnim.start()
@@ -2278,12 +2284,12 @@ class SyntaxUI(QMainWindow):
     def TempCoTabManualSpeedDef(self):
         self.TempCoTabManualSpeedBool = not self.TempCoTabManualSpeedBool
         if (self.TempCoTabManualSpeedBool == True):  # Manual
-            self.TempCoManualSpeedAnim = QtCore.QPropertyAnimation(self.TempCoTabManualSpeedLabel, 'pos')
+            self.TempCoManualSpeedAnim = QPropertyAnimation(self.TempCoTabManualSpeedLabel, 'pos')
             self.TempCoManualSpeedAnim.setStartValue(QtCore.QPoint(29, 77))
             self.TempCoManualSpeedAnim.setEndValue(QtCore.QPoint(29, 23))
             self.TempCoManualSpeedAnim.start()
         if (self.TempCoTabManualSpeedBool == False):  # Manual
-            self.TempCoManualSpeedAnim = QtCore.QPropertyAnimation(self.TempCoTabManualSpeedLabel, 'pos')
+            self.TempCoManualSpeedAnim = QPropertyAnimation(self.TempCoTabManualSpeedLabel, 'pos')
             self.TempCoManualSpeedAnim.setStartValue(QtCore.QPoint(29, 23))
             self.TempCoManualSpeedAnim.setEndValue(QtCore.QPoint(29, 77))
             self.TempCoManualSpeedAnim.start()
@@ -2367,7 +2373,7 @@ class SyntaxUI(QMainWindow):
             self.BGLabel1.setPixmap(QPixmap(self.BGPath + self.BGPathL[self.BGImagesNUM]))
             opacity1 = QGraphicsOpacityEffect()
             self.BGLabel2.setGraphicsEffect(opacity1)
-            self.ChangeBackGroundAnim = QtCore.QPropertyAnimation(opacity1, b'opacity')
+            self.ChangeBackGroundAnim = QPropertyAnimation(opacity1, b'opacity')
             self.ChangeBackGroundAnim.setDuration(500)
             self.ChangeBackGroundAnim.setStartValue(1)
             self.ChangeBackGroundAnim.setEndValue(0)
@@ -2500,14 +2506,14 @@ class SyntaxUI(QMainWindow):
         opacity = QGraphicsOpacityEffect(self)
         opacity.setOpacity(0)
         self.MenuWidget.setGraphicsEffect(opacity)
-        self.MenuWidgetAnim = QtCore.QPropertyAnimation(opacity, b"opacity")
+        self.MenuWidgetAnim = QPropertyAnimation(opacity, b"opacity")
         self.MenuWidgetAnim.setDuration(250)
         self.MenuWidgetAnim.setStartValue(0)
         self.MenuWidgetAnim.setEndValue(1)
         self.MenuWidgetAnim.start()
         opacity = QGraphicsOpacityEffect(self)
         self.MenuButton.setGraphicsEffect(opacity)
-        self.MenuButtonAnim = QtCore.QPropertyAnimation(opacity, b"opacity")
+        self.MenuButtonAnim = QPropertyAnimation(opacity, b"opacity")
         self.MenuButtonAnim.setDuration(250)
         self.MenuButtonAnim.setStartValue(0.7)
         self.MenuButtonAnim.setEndValue(0.4)
@@ -2515,7 +2521,7 @@ class SyntaxUI(QMainWindow):
         blurBG = QGraphicsBlurEffect(self)
         blurBG.setBlurRadius(0)
         self.BGLabel1.setGraphicsEffect(blurBG)
-        self.BGLabeAnim = QtCore.QPropertyAnimation(blurBG, "blurRadius")
+        self.BGLabeAnim = QPropertyAnimation(blurBG, "blurRadius")
         self.BGLabeAnim.setDuration(250)
         self.BGLabeAnim.setStartValue(0)
         self.BGLabeAnim.setEndValue(10)
@@ -2569,14 +2575,14 @@ class SyntaxUI(QMainWindow):
         opacity = QGraphicsOpacityEffect(self)
         opacity.setOpacity(1)
         self.MenuWidget.setGraphicsEffect(opacity)
-        self.MenuWidgetAnim = QtCore.QPropertyAnimation(opacity, b"opacity")
+        self.MenuWidgetAnim = QPropertyAnimation(opacity, b"opacity")
         self.MenuWidgetAnim.setDuration(250)
         self.MenuWidgetAnim.setStartValue(1)
         self.MenuWidgetAnim.setEndValue(0)
         self.MenuWidgetAnim.start()
         opacity = QGraphicsOpacityEffect(self)
         self.MenuButton.setGraphicsEffect(opacity)
-        self.MenuButtonAnim = QtCore.QPropertyAnimation(opacity, b"opacity")
+        self.MenuButtonAnim = QPropertyAnimation(opacity, b"opacity")
         self.MenuButtonAnim.setDuration(250)
         self.MenuButtonAnim.setStartValue(0.4)
         self.MenuButtonAnim.setEndValue(0.7)
@@ -2584,13 +2590,13 @@ class SyntaxUI(QMainWindow):
         blurBG = QGraphicsBlurEffect(self)
         blurBG.setBlurRadius(10)
         self.BGLabel1.setGraphicsEffect(blurBG)
-        self.BGLabeAnim = QtCore.QPropertyAnimation(blurBG, "blurRadius")
+        self.BGLabeAnim = QPropertyAnimation(blurBG, "blurRadius")
         self.BGLabeAnim.setDuration(250)
         self.BGLabeAnim.setStartValue(10)
         self.BGLabeAnim.setEndValue(0)
         self.BGLabeAnim.start()
 
-        self.MenuButtonGAnim = QtCore.QPropertyAnimation(self.MenuButton, b"geometry")
+        self.MenuButtonGAnim = QPropertyAnimation(self.MenuButton, b"geometry")
         self.MenuButtonGAnim.setDuration(250)
         # self.MenuButtonGAnim.setStartValue(QRect(2, 30, 100, 100))
         self.MenuButtonGAnim.setEndValue(QtCore.QRect(2, -2, 100, 100))
@@ -2601,7 +2607,7 @@ class SyntaxUI(QMainWindow):
             self.FadeUnfadeAnim[NumOfBTN].deleteLater()
         self.effect = QGraphicsOpacityEffect()
         Widget.setGraphicsEffect(self.effect)
-        self.FadeUnfadeAnim[NumOfBTN] = QtCore.QPropertyAnimation(self.effect, b"opacity")
+        self.FadeUnfadeAnim[NumOfBTN] = QPropertyAnimation(self.effect, b"opacity")
         self.FadeUnfadeAnim[NumOfBTN].setDuration(500)
         self.FadeUnfadeAnim[NumOfBTN].setKeyValueAt(0, 0.4)
         self.FadeUnfadeAnim[NumOfBTN].setKeyValueAt(0.5, 0)
@@ -2613,7 +2619,7 @@ class SyntaxUI(QMainWindow):
             self.FadeUpFadeDownAnim[NumOfBTN].deleteLater()
         self.effect = QGraphicsOpacityEffect()
         Widget.setGraphicsEffect(self.effect)
-        self.FadeUpFadeDownAnim[NumOfBTN] = QtCore.QPropertyAnimation(self.effect, b"opacity")
+        self.FadeUpFadeDownAnim[NumOfBTN] = QPropertyAnimation(self.effect, b"opacity")
         self.FadeUpFadeDownAnim[NumOfBTN].setDuration(350)
         self.FadeUpFadeDownAnim[NumOfBTN].setKeyValueAt(0, opacity)
         self.FadeUpFadeDownAnim[NumOfBTN].setKeyValueAt(0.25, (2*opacity+opacityHigh)/3)
@@ -2627,7 +2633,7 @@ class SyntaxUI(QMainWindow):
             self.FadeTimerHome[NumOfBTN].deleteLater()
         self.effect = QGraphicsOpacityEffect()
         Widget.setGraphicsEffect(self.effect)
-        self.FadeTimerHome[NumOfBTN] = QtCore.QPropertyAnimation(self.effect, b"opacity")
+        self.FadeTimerHome[NumOfBTN] = QPropertyAnimation(self.effect, b"opacity")
         self.FadeTimerHome[NumOfBTN].setDuration(2000)
         self.FadeTimerHome[NumOfBTN].setKeyValueAt(0, opacity)
         self.FadeTimerHome[NumOfBTN].setKeyValueAt(0.5, opacityHigh)
@@ -2639,7 +2645,7 @@ class SyntaxUI(QMainWindow):
             self.FadeIO[NumOfBTN].deleteLater()
         self.effect = QGraphicsOpacityEffect()
         Widget.setGraphicsEffect(self.effect)
-        self.FadeIO[NumOfBTN] = QtCore.QPropertyAnimation(self.effect, b"opacity")
+        self.FadeIO[NumOfBTN] = QPropertyAnimation(self.effect, b"opacity")
         self.FadeIO[NumOfBTN].setDuration(500)
         self.FadeIO[NumOfBTN].setKeyValueAt(0, Fopacity)
         self.FadeIO[NumOfBTN].setKeyValueAt(1, Sopacity)
@@ -2653,14 +2659,14 @@ class SyntaxUI(QMainWindow):
         self.ChangeImageFadeGroup[NumOfBTN] = QtCore.QSequentialAnimationGroup()
         self.effect1 = QGraphicsOpacityEffect()
         Widget.setGraphicsEffect(self.effect1)
-        self.ChangeImageFade[NumOfBTN] = QtCore.QPropertyAnimation(self.effect1, b"opacity")
+        self.ChangeImageFade[NumOfBTN] = QPropertyAnimation(self.effect1, b"opacity")
         self.ChangeImageFade[NumOfBTN].setDuration(250)
         self.ChangeImageFade[NumOfBTN].setKeyValueAt(0, opacity1)
         self.ChangeImageFade[NumOfBTN].setKeyValueAt(1, 0)
         self.ChangeImageFade[NumOfBTN].finished.connect(lambda: self.ChangeImage(Widget, Image))
         self.ChangeImageFadeGroup[NumOfBTN].addAnimation(self.ChangeImageFade[NumOfBTN])
         Widget.setGraphicsEffect(self.effect1)
-        self.ChangeImageFade[NumOfBTN] = QtCore.QPropertyAnimation(self.effect1, b"opacity")
+        self.ChangeImageFade[NumOfBTN] = QPropertyAnimation(self.effect1, b"opacity")
         self.ChangeImageFade[NumOfBTN].setDuration(250)
         self.ChangeImageFade[NumOfBTN].setKeyValueAt(0, 0)
         self.ChangeImageFade[NumOfBTN].setKeyValueAt(1, opacity1)
