@@ -15,13 +15,14 @@ import urllib3
 from telegram import ReplyKeyboardMarkup, Bot
 from telegram.error import NetworkError, Unauthorized
 import pygame
+# ! from picamera import PiCamera
 
 update_id = None
 MAJN_ID = 577321253
 Father_ID = 1288912519
 Mother_ID = 518708663
 Alirezaishisname = 7141423261
-bot = Bot(token='your token', base_url="https://tapi.bale.ai/")
+bot = Bot(token='783741740:c34f5dad998ac3dc63010957cb5f929e7d0d6d3e', base_url="https://tapi.bale.ai/")
 
 class SyntaxUI(QMainWindow):
     def __init__(self):
@@ -234,7 +235,7 @@ class SyntaxUI(QMainWindow):
             self.HomeTabWeatherWidget.setStyleSheet("background:url(\"Label/HomeTabLabel2.png\");")
             self.HomeTabWeatherWidget.setGraphicsEffect(Opacity(0.5))
             r = requests.get(
-                'http://api.openweathermap.org/data/2.5/weather?q=Tehran&APPID=your token')
+                'http://api.openweathermap.org/data/2.5/weather?q=Tehran&APPID=b3a9cd6b01d2ab3fe9f0187351659781')
             self.OutsideTempW = str(int(r.json()['main']['temp']) - 273.15)
             self.OutSideHumidityW = str(r.json()['main']['humidity'])
             self.HomeTabWeatherLabel = QLabel(self.HomeTabWeatherWidget)
@@ -1237,12 +1238,6 @@ class SyntaxUI(QMainWindow):
             resolution = QDesktopWidget().screenGeometry()
             self.msgBox.move((resolution.width() / 2) - (self.frameSize().width() / 2) - 100,
                              (resolution.height() / 2) - (self.frameSize().height() / 2))
-            self.msgBox.setWindowFlags(Qt.FramelessWindowHint)
-            self.msgBox.setStyleSheet("color: blue;")
-            resolution = QDesktopWidget().screenGeometry()
-            self.msgBox.move((resolution.width() / 2) - (self.frameSize().width() / 2) - 100,
-                             (resolution.height() / 2) - (self.frameSize().height() / 2))
-            self.msgBox.setWindowFlags(Qt.FramelessWindowHint)
             self.msgBox.setStyleSheet("color: blue;")
             self.hide()
 
@@ -1422,6 +1417,7 @@ class SyntaxUI(QMainWindow):
                             ['🔇', '🔊'],
                             ['⚙ Setting ⚙']])
                         bot.sendMessage(chat_id, 'Home:', reply_markup=markup)
+                    break
         except NetworkError:
             x=0
         except Unauthorized:
@@ -2369,6 +2365,8 @@ class SyntaxUI(QMainWindow):
             self.ChangeBackGroundAnim.setStartValue(1)
             self.ChangeBackGroundAnim.setEndValue(0)
             self.ChangeBackGroundAnim.start()
+            del opacity1
+            del opacity
 
     def MusicTabFolderDef(self):
         self.MusicPath = str(QFileDialog.getExistingDirectory(self, "Select Your Directory For Music"))
@@ -2705,14 +2703,11 @@ class SyntaxUI(QMainWindow):
         if (self.securityBool == True): # ! and  int(GPIO.input(16)) == 1):
             if (self.securityCount == 0):
                 self.bot.sendMessage(MAJN_ID, "Someone in your room...")
+                # ! camera = PiCamera()
+                # ! time.sleep(2)
+                # ! camera.capture("img.jpg")
+                # ! del camera
+                bot.send_photo(chat_id, photo="img.jpg")
             self.securityCount = self.securityCount + 1
             if (self.securityCount == 10):
                 self.securityCount = 0
-
-    def say(self, audioString):
-        print(audioString)
-        pygame.init()
-        pygame.mixer.init()
-        pygame.mixer.music.load("audio.mp3")
-        pygame.mixer.music.play()
-
