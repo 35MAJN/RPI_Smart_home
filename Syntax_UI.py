@@ -1146,7 +1146,7 @@ class SyntaxUI(QMainWindow):
 
             self.security = QTimer(self)
             self.security.setInterval(500)
-            self.security.timeout.connect(self.SecurityDef)
+            self.security.timeout.connect(self.SecurityDef(bot))
             self.security.start()
             self.securityBool = False
             self.securityCount = 0
@@ -1223,7 +1223,7 @@ class SyntaxUI(QMainWindow):
             except IndexError:
                 update_id = None
             self.BaleBotT = QTimer(self)
-            self.BaleBotT.timeout.connect(self.BaleBotDef)
+            self.BaleBotT.timeout.connect(self.BaleBotDef(bot))
             self.BaleBotT.setInterval(10000)
             self.BaleBotT.start()
             self.BotDelayControl = 0
@@ -1606,7 +1606,7 @@ class SyntaxUI(QMainWindow):
             bot.sendMessage(MAJN_ID, info)
 '''
     def AlarmDef(self):
-        now = datetime.datetime.now()
+        now = datetime.now()
         pygame.init()
         if(pygame.mixer.music.get_busy() == False and self.AzanPlaying):
             self.msgBox.done(0)
