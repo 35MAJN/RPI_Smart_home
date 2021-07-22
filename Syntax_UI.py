@@ -3,7 +3,7 @@ from PyQt4.QtGui import QPushButton, QFont, QMessageBox, QDesktopWidget, QGraphi
 from PyQt4.QtGui import QGraphicsBlurEffect
 from PyQt4.QtCore import Qt, QSize, QTimer, QPropertyAnimation ,QStateMachine, QState, QPointF
 from PyQt4.QtCore import QParallelAnimationGroup, QSequentialAnimationGroup, QEasingCurve
-from PyQt4.QtCore import QPoint
+from PyQt4.QtCore import QPoint , QThread
 from os import path, walk
 import shutil
 from array import array
@@ -21,7 +21,7 @@ MAJN_ID = 577321253
 Father_ID = 1288912519
 Mother_ID = 518708663
 Alirezaishisname = 7141423261
-bot = Bot(token='YourToke', base_url="https://tapi.bale.ai/")
+bot = Bot(token='your token', base_url="https://tapi.bale.ai/")
 
 class SyntaxUI(QMainWindow):
     def __init__(self):
@@ -234,7 +234,7 @@ class SyntaxUI(QMainWindow):
             self.HomeTabWeatherWidget.setStyleSheet("background:url(\"Label/HomeTabLabel2.png\");")
             self.HomeTabWeatherWidget.setGraphicsEffect(Opacity(0.5))
             r = requests.get(
-                'http://api.openweathermap.org/data/2.5/weather?q=Tehran&APPID=Yours')
+                'http://api.openweathermap.org/data/2.5/weather?q=Tehran&APPID=your token')
             self.OutsideTempW = str(int(r.json()['main']['temp']) - 273.15)
             self.OutSideHumidityW = str(r.json()['main']['humidity'])
             self.HomeTabWeatherLabel = QLabel(self.HomeTabWeatherWidget)
@@ -385,7 +385,7 @@ class SyntaxUI(QMainWindow):
             self.HomeTabMusicNext = QPushButton(self.HomeTabWidget)
             self.HomeTabMusicNext.setIcon(QIcon("Label/next.png"))
             self.HomeTabMusicNext.setIconSize(QSize(40, 40))
-            self.HomeTabMusicNext.setGeometry(90, 419, 40, 40)
+            self.HomeTabMusicNext.setGeometry(190, 419, 40, 40)
             self.HomeTabMusicNext.setStyleSheet("border-radius: 5%;outline-style: initial;")
             self.HomeTabMusicNext.setGraphicsEffect(Opacity(0.4))
             self.HomeTabMusicNext.clicked.connect(self.NextMusicDef)
@@ -1219,15 +1219,12 @@ class SyntaxUI(QMainWindow):
                 ['🔇', '🔊'],
                 ['⚙ Setting ⚙']])
             bot.sendMessage(chat_id=MAJN_ID, text='I\'ve restarted \nHome:', reply_markup=markup)
-            bot.sendMessage(chat_id=Father_ID, text='I\'ve restarted \nHome:', reply_markup=markup)
-            bot.sendMessage(chat_id=Mother_ID, text='I\'ve restarted \nHome:', reply_markup=markup)
-            try:
-                update_id = bot.get_updates()[0].update_id
-            except IndexError:
-                update_id = None
+            #bot.sendMessage(chat_id=Father_ID, text='I\'ve restarted \nHome:', reply_markup=markup)
+            #bot.sendMessage(chat_id=Mother_ID, text='I\'ve restarted \nHome:', reply_markup=markup)
+            #self.BaleBotT = newThread(self.BaleBotDef)
             self.BaleBotT = QTimer(self)
             self.BaleBotT.timeout.connect(self.BaleBotDef)
-            self.BaleBotT.setInterval(10000)
+            self.BaleBotT.setInterval(200)
             self.BaleBotT.start()
             self.BotDelayControl = 0
             self.Clicked = False
@@ -1252,10 +1249,9 @@ class SyntaxUI(QMainWindow):
     def BaleBotDef(self):
         global update_id
         try:
-            for update in bot.get_updates(offset=update_id, timeout=10):
+            for update in bot.get_updates(offset=update_id):
                 update_id = update.update_id + 1
                 if update.message:
-                    self.BaleBotT.setInterval(100)
                     command = update.message.text
                     chat_id = update.effective_chat.id
                     if(update.effective_chat.id == MAJN_ID):
@@ -1432,7 +1428,6 @@ class SyntaxUI(QMainWindow):
             # The user has removed or blocked the bot.
             update_id += 1
 
-
     def MenuHomeBTNDef(self):
         self.HomeBTN.click()
         self.HomeState = "Home"
@@ -1449,15 +1444,6 @@ class SyntaxUI(QMainWindow):
         else:
             if(self.RoomTabBTN4Bool):
                 self.RoomTabBTN4ON.click()
-        if(self.Clicked):
-            self.BaleBotT.setInterval(15000)
-            self.BotDelayControl = 0
-            self.Clicked = False
-        else:
-            if (self.BotDelayControl > 15):
-                self.BaleBotT.setInterval(500)
-            else:
-                self.BotDelayControl += 1
         if(self.SettingTabAIB):
             if(GPIO.input(16)):
                 self.ANNLamp = int(self.ANNH[now.hour]) + self.ANNZ * int(GPIO.input(16))
