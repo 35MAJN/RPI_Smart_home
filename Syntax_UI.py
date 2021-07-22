@@ -1151,10 +1151,10 @@ class SyntaxUI(QMainWindow):
             self.securityBool = False
             self.securityCount = 0
 
-            self.AITimer = QTimer(self)
-            self.AITimer.setInterval(1000)
-            self.AITimer.timeout.connect(self.AIDef)
-            self.AITimer.start()
+            # ! self.AITimer = QTimer(self)
+            # ! self.AITimer.setInterval(1000)
+            # ! self.AITimer.timeout.connect(self.AIDef)
+            # ! self.AITimer.start()
         if ("Azan" is not None):
             self.timeir = str(urllib3.PoolManager().request('GET', 'http://www.time.ir/').data)
             self.AzanMorningInt = self.timeir.find("lblAzanMorning\" class=\"inlineBlock ltr text-nowrap\">") + len(
