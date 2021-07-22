@@ -22,15 +22,15 @@ Mother_ID = 518708663
 Alirezaishisname = 714142326
 
 class SyntaxUI(QMainWindow):
-    def __init__(self, Syntax, bot):
+    def __init__(self, bot):
         super(self.__class__, self).__init__()
         if ("Ui Setup" is not None):
-            Syntax.setObjectName("Syntax")
-            Syntax.resize(1024, 600)
-            Syntax.setMinimumSize(1024, 600)
-            Syntax.setMaximumSize(1024, 600)
-            Syntax.setWindowTitle("3MAJN5")
-            Syntax.setWindowFlags(Qt.FramelessWindowHint)
+            self.setObjectName("Syntax")
+            self.resize(1024, 600)
+            self.setMinimumSize(1024, 600)
+            self.setMaximumSize(1024, 600)
+            self.setWindowTitle("3MAJN5")
+            self.setWindowFlags(Qt.FramelessWindowHint)
             if (path.exists('Label')):
                 print("We have Label")
             else:
