@@ -17,6 +17,20 @@ from telegram.error import NetworkError, Unauthorized
 import pygame
 from time import sleep
 # ! from picamera import PiCamera
+# ! import RPi.GPIO as GPIO
+
+def GPIOsetup():
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
+    GPIO.setup(27,GPIO.OUT)
+    GPIO.setwarnings(False)
+    GPIO.setup(19,GPIO.OUT)
+    GPIO.setwarnings(False)
+    GPIO.setup(22,GPIO.OUT)
+    GPIO.setwarnings(False)
+    GPIO.setup(6,GPIO.OUT)
+    GPIO.setwarnings(False)
+    GPIO.setup(16,GPIO.IN)
 
 update_id = None
 MAJN_ID = 577321253
