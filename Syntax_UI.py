@@ -23,7 +23,8 @@ MAJN_ID = 577321253
 Father_ID = 1288912519
 Mother_ID = 518708663
 Alirezaishisname = 7141423261
-bot = Bot(token='Your Token', base_url="https://tapi.bale.ai/")
+bot = Bot(token='Your Telegram Token', base_url="https://tapi.bale.ai/")
+OWM_token = 'Your openweathermap Token'
 home_markup = ReplyKeyboardMarkup(keyboard=[
     ['🎛️ Room 🎛️', '📊 Info 📊'],
     ['⏭', '⏯','⏮'],
@@ -251,8 +252,9 @@ class SyntaxUI(QMainWindow):
             self.HomeTabWeatherWidget.setGeometry(0, 122, 250, 90)
             self.HomeTabWeatherWidget.setStyleSheet("background:url(\"Label/HomeTabLabel2.png\");")
             self.HomeTabWeatherWidget.setGraphicsEffect(Opacity(0.5))
+            global OWM_token
             r = requests.get(
-                'http://api.openweathermap.org/data/2.5/weather?q=Tehran&APPID=Your Token')
+                'http://api.openweathermap.org/data/2.5/weather?q=Tehran&APPID='+OWM_token)
             self.OutsideTempW = str(int(r.json()['main']['temp']) - 273.15)
             self.OutSideHumidityW = str(r.json()['main']['humidity'])
             self.HomeTabWeatherLabel = QLabel(self.HomeTabWeatherWidget)
@@ -462,7 +464,7 @@ class SyntaxUI(QMainWindow):
             self.RoomTabBTN3Label2.setPixmap(QPixmap("Label/BTN3/Label2.png"))
             self.RoomTabBTN3Label2.setGraphicsEffect(Opacity(0))
             self.RoomTabBTN4Label2 = QLabel(self.RoomTabWidget)
-            self.RoomTabBTN4Label2.setGeometry(34, 275, 200, 200)
+            self.RoomTabBTN4Label2.setGeometry(434, 275, 200, 200)
             self.RoomTabBTN4Label2.setPixmap(QPixmap("Label/BTN4/Label2.png"))
             self.RoomTabBTN4Label2.setGraphicsEffect(Opacity(0))
             '''################################################################################################Label3'''
